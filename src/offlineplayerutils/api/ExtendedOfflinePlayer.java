@@ -19,9 +19,12 @@ package offlineplayerutils.api;
 
 import java.util.Map;
 
+import offlineplayerutils.internal.InternalAccessor;
+
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class ExtendedOfflinePlayer implements OfflinePlayer {
 
@@ -30,6 +33,16 @@ public class ExtendedOfflinePlayer implements OfflinePlayer {
 	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer) {
 		this.bukkitOfflinePlayer = bukkitOfflinePlayer;
 	}
+
+
+	public ItemStack[] getInventoryContents() {
+		return InternalAccessor.getInstance().newInvnetoryData().getInventoryContents(bukkitOfflinePlayer);
+	}
+
+	public ItemStack[] getArmorContents() {
+		return InternalAccessor.getInstance().newInvnetoryData().getArmorContents(bukkitOfflinePlayer);
+	}
+
 
 	@Override
 	public boolean isOp() {

@@ -35,7 +35,7 @@ public class InternalAccessor {
 		instance.version = packageName.substring(packageName.lastIndexOf('.') + 1);
 	}
 
-	public InventoryDataInterface newPacket56() {
+	public InventoryDataInterface newInvnetoryData() {
 		return (InventoryDataInterface) createObject(InventoryDataInterface.class, "InventoryData");
 	}
 
