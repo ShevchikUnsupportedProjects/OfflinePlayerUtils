@@ -20,6 +20,7 @@ package offlineplayerutils.api;
 import java.util.Map;
 
 import offlineplayerutils.internal.InternalAccessor;
+import offlineplayerutils.internal.InventoryDataInterface;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -29,26 +30,28 @@ import org.bukkit.inventory.ItemStack;
 public class ExtendedOfflinePlayer implements OfflinePlayer {
 
 	private OfflinePlayer bukkitOfflinePlayer;
+	private InventoryDataInterface inventoryData;
 
 	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer) {
 		this.bukkitOfflinePlayer = bukkitOfflinePlayer;
+		inventoryData = InternalAccessor.getInstance().newInvnetoryData();
 	}
 
 
 	public ItemStack[] getInventoryContents() {
-		return InternalAccessor.getInstance().newInvnetoryData().getInventoryContents(bukkitOfflinePlayer);
+		return inventoryData.getInventoryContents(bukkitOfflinePlayer);
 	}
 
 	public ItemStack[] getArmorContents() {
-		return InternalAccessor.getInstance().newInvnetoryData().getArmorContents(bukkitOfflinePlayer);
+		return inventoryData.getArmorContents(bukkitOfflinePlayer);
 	}
 
 	public void setInventoryContents(ItemStack[] contents) {
-		InternalAccessor.getInstance().newInvnetoryData().setInventoryContents(bukkitOfflinePlayer, contents);
+		inventoryData.setInventoryContents(bukkitOfflinePlayer, contents);
 	}
 
 	public void setArmorContents(ItemStack[] contents) {
-		InternalAccessor.getInstance().newInvnetoryData().setInventoryContents(bukkitOfflinePlayer, contents);
+		inventoryData.setArmorContents(bukkitOfflinePlayer, contents);
 	}
 
 
