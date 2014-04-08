@@ -39,6 +39,10 @@ public class InternalAccessor {
 		return (InventoryDataInterface) createObject(InventoryDataInterface.class, "InventoryData");
 	}
 
+	public LocationDataInterface newLocationData() {
+		return (LocationDataInterface) createObject(LocationDataInterface.class, "LocationData");
+	}
+
 	private Object createObject(Class<? extends Object> assignableClass, String className) {
 		try {
 			Class<?> internalClass = Class.forName("offlineplayerutils.internal." + version + "." + server + "." + className);
