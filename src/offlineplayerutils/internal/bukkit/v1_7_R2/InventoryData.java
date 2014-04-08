@@ -41,7 +41,7 @@ public class InventoryData implements InventoryDataInterface {
 		try {
 			NBTTagCompound data = getData(player);
 			NBTTagList nbttaglist = data.getList("Inventory", 10);
-			ItemStack[] armor = new ItemStack[36];
+			ItemStack[] armor = new ItemStack[4];
 	        for (int i = 0; i < nbttaglist.size(); ++i) {
 	            NBTTagCompound nbttagcompound = nbttaglist.get(i);
 	            int j = nbttagcompound.getByte("Slot") & 255;
@@ -59,8 +59,24 @@ public class InventoryData implements InventoryDataInterface {
 		return null;
 	}
 	
-	public void setInventoryContents(OfflinePlayer player) {
-		
+	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents) {
+		try {
+			ItemStack[] items = new ItemStack[36];
+			if (contents != null) {
+				for (int c = 0; c < contents.length; c++) {
+					if (contents[c] != null) {
+						items[c] = contents[c];
+					}
+				}
+			}
+			NBTTagCompound data = getData(player);
+			NBTTagList nbttaglist = data.getList("Inventory", 10);
+			for (int i = 0; i < items.length; ++i) {
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
     private NBTTagCompound getData(OfflinePlayer player) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
