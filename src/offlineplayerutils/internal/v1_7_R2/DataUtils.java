@@ -15,7 +15,7 @@
  *
  */
 
-package offlineplayerutils.internal.bukkit.v1_7_R2;
+package offlineplayerutils.internal.v1_7_R2;
 
 import java.io.File;
 import java.io.FileInputStream;

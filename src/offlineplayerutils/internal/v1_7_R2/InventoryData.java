@@ -15,7 +15,7 @@
  *
  */
 
-package offlineplayerutils.internal.bukkit.v1_7_R2;
+package offlineplayerutils.internal.v1_7_R2;
 
 import net.minecraft.server.v1_7_R2.NBTTagCompound;
 import net.minecraft.server.v1_7_R2.NBTTagList;

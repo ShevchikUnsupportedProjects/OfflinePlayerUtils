@@ -27,7 +27,6 @@ public class InternalAccessor {
 	}
 	
 	private String version = "v1_7_R2";
-	private String server = "bukkit";
 
 	public static void initialize(Server server) {
 		instance = new InternalAccessor();
@@ -45,7 +44,7 @@ public class InternalAccessor {
 
 	private Object createObject(Class<? extends Object> assignableClass, String className) {
 		try {
-			Class<?> internalClass = Class.forName("offlineplayerutils.internal." + version + "." + server + "." + className);
+			Class<?> internalClass = Class.forName("offlineplayerutils.internal." + version + "." + className);
 			if (assignableClass.isAssignableFrom(internalClass)) {
 				return internalClass.getConstructor().newInstance();
 			}
