@@ -69,7 +69,7 @@ public class InventoryData implements InventoryDataInterface {
 	@Override
 	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents) {
 		try {
-			ItemStack[] items = getInventoryContents(player);
+			ItemStack[] items = new ItemStack[36];
 			ItemStack[] armor = getArmorContents(player);
 			if (contents != null) {
 				for (int c = 0; c < 36; c++) {
@@ -90,7 +90,7 @@ public class InventoryData implements InventoryDataInterface {
 	public void setArmorContents(OfflinePlayer player, ItemStack[] contents) {
 		try {
 			ItemStack[] items = getInventoryContents(player);
-			ItemStack[] armor = getArmorContents(player);
+			ItemStack[] armor = new ItemStack[4];
 			if (contents != null) {
 				for (int c = 0; c < 4; c++) {
 					if (c < contents.length && contents[c] != null) {
