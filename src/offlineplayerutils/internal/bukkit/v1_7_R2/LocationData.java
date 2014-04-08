@@ -17,16 +17,50 @@
 
 package offlineplayerutils.internal.bukkit.v1_7_R2;
 
-import org.bukkit.Location;
 
-public class LocationData {
+import java.util.UUID;
 
-	public Location getLocation() {
+import net.minecraft.server.v1_7_R2.NBTTagCompound;
+import net.minecraft.server.v1_7_R2.NBTTagDouble;
+import net.minecraft.server.v1_7_R2.NBTTagList;
+import offlineplayerutils.api.LocationInfo;
+import offlineplayerutils.internal.LocationDataInterface;
+
+import org.bukkit.OfflinePlayer;
+
+public class LocationData implements LocationDataInterface {
+
+	@Override
+	public LocationInfo getLocation(OfflinePlayer player) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			UUID world = new UUID(data.getLong("WorldUUIDMost"), data.getLong("WorldUUIDLeast"));
+			NBTTagList nbttaglist = data.getList("Pos", 6);
+			double x = nbttaglist.d(0);
+			double y = nbttaglist.d(1);
+			double z = nbttaglist.d(2);
+			return new LocationInfo(world, x, y, z);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
-	public void setLocation(Location location) {
-		
+	@Override
+	public void setLocation(OfflinePlayer player, LocationInfo location) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			data.setLong("WorldUUIDMost", location.getWorldUUID().getMostSignificantBits());
+			data.setLong("WorldUUIDLeast", location.getWorldUUID().getLeastSignificantBits());
+			NBTTagList nbttaglist = new NBTTagList();
+			nbttaglist.add(new NBTTagDouble(location.getX()));
+			nbttaglist.add(new NBTTagDouble(location.getY()));
+			nbttaglist.add(new NBTTagDouble(location.getZ()));
+			data.set("Pos", nbttaglist);
+			DataUtils.saveData(player, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

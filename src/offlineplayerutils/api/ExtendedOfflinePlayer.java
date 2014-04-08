@@ -57,6 +57,13 @@ public class ExtendedOfflinePlayer implements OfflinePlayer {
 		inventoryData.setArmorContents(bukkitOfflinePlayer, contents);
 	}
 
+	public LocationInfo getLocation() {
+		return locationData.getLocation(bukkitOfflinePlayer);
+	}
+
+	public void setLocation(LocationInfo location) {
+		locationData.setLocation(bukkitOfflinePlayer, location);
+	}
 
 	@Override
 	public boolean isOp() {
