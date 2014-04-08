@@ -71,35 +71,59 @@ public class InventoryData implements InventoryDataInterface {
 			ItemStack[] items = getInventoryContents(player);
 			ItemStack[] armor = getArmorContents(player);
 			if (contents != null) {
-				for (int c = 0; c < contents.length; c++) {
-					if (contents[c] != null) {
+				for (int c = 0; c < 36; c++) {
+					if (c < contents.length && contents[c] != null) {
 						items[c] = contents[c];
 					}
 				}
 			}
 			NBTTagCompound data = getData(player);
-			NBTTagList nbttaglist = new NBTTagList();
-			for (int i = 0; i < items.length; ++i) {
-	            if (items[i] != null) {
-	            	NBTTagCompound nbttagcompound = new NBTTagCompound();
-	                nbttagcompound.setByte("Slot", (byte) i);
-	                CraftItemStack.asNMSCopy(items[i]).save(nbttagcompound);
-	                nbttaglist.add(nbttagcompound);
-	            }
-			}
-			for (int i = 100; i < armor.length; ++i) {
-				if (armor[i] != null) {
-	            	NBTTagCompound nbttagcompound = new NBTTagCompound();
-	                nbttagcompound.setByte("Slot", (byte) i);
-	                CraftItemStack.asNMSCopy(armor[i]).save(nbttagcompound);
-	                nbttaglist.add(nbttagcompound);
-				}
-			}
-			data.set("Inventory", nbttaglist);
+			saveInvToNBT(data, items, armor);
 			saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setArmorContents(OfflinePlayer player, ItemStack[] contents) {
+		try {
+			ItemStack[] items = getInventoryContents(player);
+			ItemStack[] armor = getArmorContents(player);
+			if (contents != null) {
+				for (int c = 0; c < 4; c++) {
+					if (c < contents.length && contents[c] != null) {
+						armor[c] = contents[c];
+					}
+				}
+			}
+			NBTTagCompound data = getData(player);
+			saveInvToNBT(data, items, armor);
+			saveData(player, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private NBTTagCompound saveInvToNBT(NBTTagCompound data, ItemStack[] items, ItemStack[] armor) {
+		NBTTagList nbttaglist = new NBTTagList();
+		for (int i = 0; i < items.length; ++i) {
+            if (items[i] != null) {
+            	NBTTagCompound nbttagcompound = new NBTTagCompound();
+                nbttagcompound.setByte("Slot", (byte) i);
+                CraftItemStack.asNMSCopy(items[i]).save(nbttagcompound);
+                nbttaglist.add(nbttagcompound);
+            }
+		}
+		for (int i = 100; i < armor.length; ++i) {
+			if (armor[i] != null) {
+            	NBTTagCompound nbttagcompound = new NBTTagCompound();
+                nbttagcompound.setByte("Slot", (byte) i);
+                CraftItemStack.asNMSCopy(armor[i]).save(nbttagcompound);
+                nbttaglist.add(nbttagcompound);
+			}
+		}
+		data.set("Inventory", nbttaglist);
+		return data;
 	}
 
     private NBTTagCompound getData(OfflinePlayer player) throws FileNotFoundException {
