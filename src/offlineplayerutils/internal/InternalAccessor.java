@@ -42,6 +42,10 @@ public class InternalAccessor {
 		return (LocationDataInterface) createObject(LocationDataInterface.class, "LocationData");
 	}
 
+	public WorldUUIDToNameResolverInterface newWorldUUIDToNameResolver() {
+		return (WorldUUIDToNameResolverInterface) createObject(WorldUUIDToNameResolverInterface.class, "WorldUUIDToNameResolver");
+	}
+
 	private Object createObject(Class<? extends Object> assignableClass, String className) {
 		try {
 			Class<?> internalClass = Class.forName("offlineplayerutils.internal." + version + "." + className);

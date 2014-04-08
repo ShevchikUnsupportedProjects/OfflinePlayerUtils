@@ -2,6 +2,8 @@ package offlineplayerutils.api;
 
 import java.util.UUID;
 
+import offlineplayerutils.internal.InternalAccessor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -14,7 +16,7 @@ public class LocationInfo {
 	private double z;
 	public LocationInfo(UUID worlduuid, double x, double y, double z) {
 		this.worlduuid = worlduuid;
-		this.worldname = resolveWorldName();
+		this.worldname = InternalAccessor.getInstance().newWorldUUIDToNameResolver().resolveWorldName(worlduuid);
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -43,13 +45,6 @@ public class LocationInfo {
 	public Location getLocation() {
 		if (Bukkit.getWorld(worlduuid) != null) {
 			return new Location(Bukkit.getWorld(worlduuid), x, y, z);
-		}
-		return null;
-	}
-	
-	private String resolveWorldName() {
-		if (Bukkit.getWorld(worlduuid) != null) {
-			return Bukkit.getWorld(worlduuid).getName();
 		}
 		return null;
 	}
