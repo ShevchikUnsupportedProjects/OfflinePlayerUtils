@@ -35,6 +35,10 @@ public class InternalAccessor {
 		instance.version = packageName.substring(packageName.lastIndexOf('.') + 1);
 	}
 
+	public InventoryDataInterface newPacket56() {
+		return (InventoryDataInterface) createObject(InventoryDataInterface.class, "InventoryData");
+	}
+
 	private Object createObject(Class<? extends Object> assignableClass, String className) {
 		try {
 			Class<?> internalClass = Class.forName("offlineplayerutils.internal." + version + "." + server + "." + className);
