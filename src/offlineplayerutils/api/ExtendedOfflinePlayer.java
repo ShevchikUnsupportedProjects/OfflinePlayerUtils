@@ -43,6 +43,14 @@ public class ExtendedOfflinePlayer implements OfflinePlayer {
 		return InternalAccessor.getInstance().newInvnetoryData().getArmorContents(bukkitOfflinePlayer);
 	}
 
+	public void setInventoryContents(ItemStack[] contents) {
+		InternalAccessor.getInstance().newInvnetoryData().setInventoryContents(bukkitOfflinePlayer, contents);
+	}
+
+	public void setArmorContents(ItemStack[] contents) {
+		InternalAccessor.getInstance().newInvnetoryData().setInventoryContents(bukkitOfflinePlayer, contents);
+	}
+
 
 	@Override
 	public boolean isOp() {

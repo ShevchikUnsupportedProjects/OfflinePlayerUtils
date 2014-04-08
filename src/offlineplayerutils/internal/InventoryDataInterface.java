@@ -9,4 +9,8 @@ public interface InventoryDataInterface {
 
 	public ItemStack[] getArmorContents(OfflinePlayer player);
 
+	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents);
+
+	public void setArmorContents(OfflinePlayer player, ItemStack[] contents);
+
 }

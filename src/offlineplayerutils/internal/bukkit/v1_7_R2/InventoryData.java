@@ -65,7 +65,8 @@ public class InventoryData implements InventoryDataInterface {
 		}
 		return null;
 	}
-	
+
+	@Override
 	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents) {
 		try {
 			ItemStack[] items = getInventoryContents(player);
@@ -85,6 +86,7 @@ public class InventoryData implements InventoryDataInterface {
 		}
 	}
 
+	@Override
 	public void setArmorContents(OfflinePlayer player, ItemStack[] contents) {
 		try {
 			ItemStack[] items = getInventoryContents(player);
