@@ -1,12 +1,19 @@
 package offlineplayerutils.internal.bukkit.v1_7_R2;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+import net.minecraft.server.v1_7_R2.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R2.NBTTagCompound;
 import net.minecraft.server.v1_7_R2.NBTTagList;
+
 import offlineplayerutils.internal.InventoryDataInterface;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_7_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -61,7 +68,8 @@ public class InventoryData implements InventoryDataInterface {
 	
 	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents) {
 		try {
-			ItemStack[] items = new ItemStack[36];
+			ItemStack[] items = getInventoryContents(player);
+			ItemStack[] armor = getArmorContents(player);
 			if (contents != null) {
 				for (int c = 0; c < contents.length; c++) {
 					if (contents[c] != null) {
@@ -70,19 +78,46 @@ public class InventoryData implements InventoryDataInterface {
 				}
 			}
 			NBTTagCompound data = getData(player);
-			NBTTagList nbttaglist = data.getList("Inventory", 10);
+			NBTTagList nbttaglist = new NBTTagList();
 			for (int i = 0; i < items.length; ++i) {
-				
+	            if (items[i] != null) {
+	            	NBTTagCompound nbttagcompound = new NBTTagCompound();
+	                nbttagcompound.setByte("Slot", (byte) i);
+	                CraftItemStack.asNMSCopy(items[i]).save(nbttagcompound);
+	                nbttaglist.add(nbttagcompound);
+	            }
 			}
+			for (int i = 100; i < armor.length; ++i) {
+				if (armor[i] != null) {
+	            	NBTTagCompound nbttagcompound = new NBTTagCompound();
+	                nbttagcompound.setByte("Slot", (byte) i);
+	                CraftItemStack.asNMSCopy(armor[i]).save(nbttagcompound);
+	                nbttaglist.add(nbttagcompound);
+				}
+			}
+			data.set("Inventory", nbttaglist);
+			saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-    private NBTTagCompound getData(OfflinePlayer player) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-    	Method getDataMethod = player.getClass().getDeclaredMethod("getData");
-    	getDataMethod.setAccessible(true);
-    	return (NBTTagCompound) getDataMethod.invoke(player);
+    private NBTTagCompound getData(OfflinePlayer player) throws FileNotFoundException {
+        File file = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "players" + File.separator + player.getName() + ".dat");
+        if (file.exists()) {
+            return NBTCompressedStreamTools.a((InputStream) (new FileInputStream(file)));
+        }
+        return null;
+    }
+
+    private void saveData(OfflinePlayer player, NBTTagCompound data) throws FileNotFoundException {
+		File file1 = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "players" + File.separator + player.getName() + ".dat.tmp");
+		File file2 = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "players" + File.separator + player.getName() + ".dat");
+		NBTCompressedStreamTools.a(data, (OutputStream) (new FileOutputStream(file1)));
+		if (file2.exists()) {
+			file2.delete();
+		}
+		file1.renameTo(file2);
     }
 
 }
