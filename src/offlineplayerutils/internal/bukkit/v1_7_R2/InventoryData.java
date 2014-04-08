@@ -1,19 +1,10 @@
 package offlineplayerutils.internal.bukkit.v1_7_R2;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import net.minecraft.server.v1_7_R2.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R2.NBTTagCompound;
 import net.minecraft.server.v1_7_R2.NBTTagList;
 
 import offlineplayerutils.internal.InventoryDataInterface;
 
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_7_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +14,7 @@ public class InventoryData implements InventoryDataInterface {
 	@Override
 	public ItemStack[] getInventoryContents(OfflinePlayer player) {
 		try {
-			NBTTagCompound data = getData(player);
+			NBTTagCompound data = DataUtils.getData(player);
 			NBTTagList nbttaglist = data.getList("Inventory", 10);
 			ItemStack[] items = new ItemStack[36];
 	        for (int i = 0; i < nbttaglist.size(); ++i) {
@@ -46,7 +37,7 @@ public class InventoryData implements InventoryDataInterface {
 	@Override
 	public ItemStack[] getArmorContents(OfflinePlayer player) {
 		try {
-			NBTTagCompound data = getData(player);
+			NBTTagCompound data = DataUtils.getData(player);
 			NBTTagList nbttaglist = data.getList("Inventory", 10);
 			ItemStack[] armor = new ItemStack[4];
 	        for (int i = 0; i < nbttaglist.size(); ++i) {
@@ -78,9 +69,9 @@ public class InventoryData implements InventoryDataInterface {
 					}
 				}
 			}
-			NBTTagCompound data = getData(player);
+			NBTTagCompound data = DataUtils.getData(player);
 			saveInvToNBT(data, items, armor);
-			saveData(player, data);
+			DataUtils.saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,9 +89,9 @@ public class InventoryData implements InventoryDataInterface {
 					}
 				}
 			}
-			NBTTagCompound data = getData(player);
+			NBTTagCompound data = DataUtils.getData(player);
 			saveInvToNBT(data, items, armor);
-			saveData(player, data);
+			DataUtils.saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -127,23 +118,5 @@ public class InventoryData implements InventoryDataInterface {
 		data.set("Inventory", nbttaglist);
 		return data;
 	}
-
-    private NBTTagCompound getData(OfflinePlayer player) throws FileNotFoundException {
-        File file = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "players" + File.separator + player.getName() + ".dat");
-        if (file.exists()) {
-            return NBTCompressedStreamTools.a((InputStream) (new FileInputStream(file)));
-        }
-        return null;
-    }
-
-    private void saveData(OfflinePlayer player, NBTTagCompound data) throws FileNotFoundException {
-		File file1 = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "players" + File.separator + player.getName() + ".dat.tmp");
-		File file2 = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "players" + File.separator + player.getName() + ".dat");
-		NBTCompressedStreamTools.a(data, (OutputStream) (new FileOutputStream(file1)));
-		if (file2.exists()) {
-			file2.delete();
-		}
-		file1.renameTo(file2);
-    }
 
 }
