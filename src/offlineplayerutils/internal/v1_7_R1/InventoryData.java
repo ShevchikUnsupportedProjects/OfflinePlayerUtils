@@ -112,7 +112,7 @@ public class InventoryData implements InventoryDataInterface {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private NBTTagCompound saveInvToNBT(NBTTagCompound data, ItemStack[] items, ItemStack[] armor) {
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < items.length; ++i) {

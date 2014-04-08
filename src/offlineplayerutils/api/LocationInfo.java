@@ -16,7 +16,7 @@ public class LocationInfo {
 		this.y = y;
 		this.z = z;
 	}
-	
+
 	public UUID getWorldUUID() {
 		return worlduuid;
 	}

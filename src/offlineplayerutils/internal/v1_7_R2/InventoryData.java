@@ -19,7 +19,6 @@ package offlineplayerutils.internal.v1_7_R2;
 
 import net.minecraft.server.v1_7_R2.NBTTagCompound;
 import net.minecraft.server.v1_7_R2.NBTTagList;
-
 import offlineplayerutils.internal.InventoryDataInterface;
 
 import org.bukkit.OfflinePlayer;
@@ -113,7 +112,7 @@ public class InventoryData implements InventoryDataInterface {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private NBTTagCompound saveInvToNBT(NBTTagCompound data, ItemStack[] items, ItemStack[] armor) {
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < items.length; ++i) {

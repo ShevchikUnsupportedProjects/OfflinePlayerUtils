@@ -25,7 +25,7 @@ public class InternalAccessor {
 	public static InternalAccessor getInstance() {
 		return instance;
 	}
-	
+
 	private String version = "v1_7_R2";
 
 	public static void initialize(Server server) {
