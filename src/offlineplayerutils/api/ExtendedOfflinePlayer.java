@@ -75,6 +75,22 @@ public class ExtendedOfflinePlayer implements OfflinePlayer {
 		statusData.setFoodLevel(bukkitOfflinePlayer, foodlevel);
 	}
 
+	public float getHealth() {
+		return statusData.getHealth(bukkitOfflinePlayer);
+	}
+
+	public void setHealth(float health) {
+		statusData.setHealth(bukkitOfflinePlayer, health);
+	}
+
+	public float getMaxHealth() {
+		return statusData.getMaxHealth(bukkitOfflinePlayer);
+	}
+
+	public void setMaxHealth(float maxhealth) {
+		statusData.setMaxHeath(bukkitOfflinePlayer, maxhealth);
+	}
+
 	@Override
 	public boolean isOp() {
 		return bukkitOfflinePlayer.isOp();
