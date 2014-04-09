@@ -17,18 +17,18 @@
 
 package offlineplayerutils.internal.v1_7_R2;
 
-import offlineplayerutils.internal.StatusDataInterface;
-
-import org.bukkit.OfflinePlayer;
-
 import net.minecraft.server.v1_7_R2.NBTBase;
 import net.minecraft.server.v1_7_R2.NBTTagCompound;
 import net.minecraft.server.v1_7_R2.NBTTagFloat;
 import net.minecraft.server.v1_7_R2.NBTTagInt;
 import net.minecraft.server.v1_7_R2.NBTTagShort;
+import offlineplayerutils.internal.StatusDataInterface;
+
+import org.bukkit.OfflinePlayer;
 
 public class StatusData implements StatusDataInterface {
 
+	@Override
 	public int getFoodLevel(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -39,6 +39,7 @@ public class StatusData implements StatusDataInterface {
 		return 0;
 	}
 
+	@Override
 	public void setFoodLevel(OfflinePlayer player, int foodlevel) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -49,6 +50,7 @@ public class StatusData implements StatusDataInterface {
 		}
 	}
 
+	@Override
 	public float getHealth(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -69,6 +71,7 @@ public class StatusData implements StatusDataInterface {
 		return 0;
 	}
 
+	@Override
 	public void setHealth(OfflinePlayer player, float health) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -79,6 +82,7 @@ public class StatusData implements StatusDataInterface {
 		}
 	}
 
+	@Override
 	public float getMaxHealth(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -98,6 +102,7 @@ public class StatusData implements StatusDataInterface {
 		return 0;
 	}
 
+	@Override
 	public void setMaxHeath(OfflinePlayer player, float maxhealth) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);

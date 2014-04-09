@@ -21,7 +21,6 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.UUID;
 
 import net.minecraft.server.v1_7_R2.NBTCompressedStreamTools;
@@ -55,7 +54,7 @@ public class WorldUUIDToNameResolver implements WorldUUIDToNameResolverInterface
 		}
 		return null;
 	}
-	
+
 	private boolean checkUUIDMatch(File uid, UUID uuid) {
 		DataInputStream dis = null;
 		try {
@@ -75,7 +74,7 @@ public class WorldUUIDToNameResolver implements WorldUUIDToNameResolverInterface
 
 	private String getWorldNameFromData(File dat) {
 		try {
-			NBTTagCompound root = NBTCompressedStreamTools.a((InputStream) (new FileInputStream(dat)));
+			NBTTagCompound root = NBTCompressedStreamTools.a((new FileInputStream(dat)));
 	        NBTTagCompound data = root.getCompound("Data");
 	        return data.getString("LevelName");
 		} catch (Exception e) {

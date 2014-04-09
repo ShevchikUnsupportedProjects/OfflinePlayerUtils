@@ -28,6 +28,7 @@ import org.bukkit.OfflinePlayer;
 
 public class StatusData implements StatusDataInterface {
 
+	@Override
 	public int getFoodLevel(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -38,6 +39,7 @@ public class StatusData implements StatusDataInterface {
 		return 0;
 	}
 
+	@Override
 	public void setFoodLevel(OfflinePlayer player, int foodlevel) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -48,6 +50,7 @@ public class StatusData implements StatusDataInterface {
 		}
 	}
 
+	@Override
 	public float getHealth(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -68,6 +71,7 @@ public class StatusData implements StatusDataInterface {
 		return 0;
 	}
 
+	@Override
 	public void setHealth(OfflinePlayer player, float health) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -78,6 +82,7 @@ public class StatusData implements StatusDataInterface {
 		}
 	}
 
+	@Override
 	public float getMaxHealth(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -97,6 +102,7 @@ public class StatusData implements StatusDataInterface {
 		return 0;
 	}
 
+	@Override
 	public void setMaxHeath(OfflinePlayer player, float maxhealth) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
