@@ -22,6 +22,7 @@ import java.util.Map;
 import offlineplayerutils.internal.InternalAccessor;
 import offlineplayerutils.internal.InventoryDataInterface;
 import offlineplayerutils.internal.LocationDataInterface;
+import offlineplayerutils.internal.StatusDataInterface;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -33,6 +34,7 @@ public class ExtendedOfflinePlayer implements OfflinePlayer {
 	private OfflinePlayer bukkitOfflinePlayer;
 	private InventoryDataInterface inventoryData;
 	private LocationDataInterface locationData;
+	private StatusDataInterface statusData;
 
 	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer) {
 		this.bukkitOfflinePlayer = bukkitOfflinePlayer;
@@ -63,6 +65,14 @@ public class ExtendedOfflinePlayer implements OfflinePlayer {
 
 	public void setLocation(LocationInfo location) {
 		locationData.setLocation(bukkitOfflinePlayer, location);
+	}
+
+	public int getFoodLevel() {
+		return statusData.getFoodLevel(bukkitOfflinePlayer);
+	}
+
+	public void setFoodLevel(int foodlevel) {
+		statusData.setFoodLevel(bukkitOfflinePlayer, foodlevel);
 	}
 
 	@Override
