@@ -25,4 +25,12 @@ public interface StatusDataInterface {
 
 	public void setFoodLevel(OfflinePlayer player, int foodlevel);
 
+	public float getHealth(OfflinePlayer player);
+
+	public void setHealth(OfflinePlayer player, float health);
+	
+	public float getMaxHealth(OfflinePlayer player);
+	
+	public void setMaxHeath(OfflinePlayer player, float maxhealth);
+
 }

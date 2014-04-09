@@ -21,7 +21,11 @@ import offlineplayerutils.internal.StatusDataInterface;
 
 import org.bukkit.OfflinePlayer;
 
+import net.minecraft.server.v1_7_R2.NBTBase;
 import net.minecraft.server.v1_7_R2.NBTTagCompound;
+import net.minecraft.server.v1_7_R2.NBTTagFloat;
+import net.minecraft.server.v1_7_R2.NBTTagInt;
+import net.minecraft.server.v1_7_R2.NBTTagShort;
 
 public class StatusData implements StatusDataInterface {
 
@@ -39,6 +43,65 @@ public class StatusData implements StatusDataInterface {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
 			data.setInt("foodLevel", foodlevel);
+			DataUtils.saveData(player, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public float getHealth(OfflinePlayer player) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			if (data.hasKeyOfType("HealF", 99)) {
+				return data.getFloat("HealF");
+			}
+			NBTBase nbtbase = data.get("Health");
+			if (nbtbase == null) {
+				return getMaxHealth(player);
+			} else if (nbtbase.getTypeId() == 5) {
+				return ((NBTTagFloat) nbtbase).h();
+			} else if (nbtbase.getTypeId() == 2) {
+                return ((NBTTagShort) nbtbase).e();
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public void setHealth(OfflinePlayer player, float health) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			data.setFloat("HealF", health);
+			DataUtils.saveData(player, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public float getMaxHealth(OfflinePlayer player) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+	        if (data.hasKey("Bukkit.MaxHealth")) {
+				NBTBase nbtbase = data.get("Bukkit.MaxHealth");
+	            if (nbtbase.getTypeId() == 5) {
+	                return ((NBTTagFloat) nbtbase).c();
+	            } else if (nbtbase.getTypeId() == 3) {
+	                return ((NBTTagInt) nbtbase).d();
+	            }
+	        } else {
+	        	return 20F;
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public void setMaxHeath(OfflinePlayer player, float maxhealth) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			data.setFloat("Bukkit.MaxHealth", maxhealth);
 			DataUtils.saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
