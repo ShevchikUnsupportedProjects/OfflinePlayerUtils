@@ -14,12 +14,21 @@ public class LocationInfo {
 	private double x;
 	private double y;
 	private double z;
+
 	public LocationInfo(UUID worlduuid, double x, double y, double z) {
 		this.worlduuid = worlduuid;
 		this.worldname = InternalAccessor.getInstance().newWorldUUIDToNameResolver().resolveWorldName(worlduuid);
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+
+	public LocationInfo(Location location) {
+		this.worlduuid = location.getWorld().getUID();
+		this.worldname = location.getWorld().getName();
+		this.x = location.getX();
+		this.y = location.getY();
+		this.z = location.getZ();
 	}
 
 	public UUID getWorldUUID() {
