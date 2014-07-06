@@ -27,6 +27,7 @@ public class OfflinePlayerUtils extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		InternalAccessor.initialize(getServer());
+		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 		new OfflinePlayerUtilsAPI();
 	}
 

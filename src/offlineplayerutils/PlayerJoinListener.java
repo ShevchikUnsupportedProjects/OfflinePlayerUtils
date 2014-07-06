@@ -18,6 +18,28 @@
 
 package offlineplayerutils;
 
-public class PlayerJoinListener {
+import offlineplayerutils.api.OfflinePlayerUtilsAPI;
+
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
+
+public class PlayerJoinListener implements Listener {
+
+	@EventHandler
+	public void onLogin(PlayerLoginEvent event) {
+		if (OfflinePlayerUtilsAPI.getOfflinePlayersWithActiveEditSession().contains(event.getPlayer())) {
+			event.disallow(Result.KICK_OTHER, "OfflinePlayerUtils EditSession is still active for you. Please join later.");
+		}
+	}
+
+	@EventHandler
+	public void onJoin(PlayerJoinEvent event) {
+		if (OfflinePlayerUtilsAPI.getOfflinePlayersWithActiveEditSession().contains(event.getPlayer())) {
+			event.getPlayer().kickPlayer("OfflinePlayerUtils EditSession is still active for you. Please join later.");
+		}
+	}
 
 }
