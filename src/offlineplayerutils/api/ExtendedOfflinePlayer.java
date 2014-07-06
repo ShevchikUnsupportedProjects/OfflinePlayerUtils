@@ -107,4 +107,14 @@ public class ExtendedOfflinePlayer {
 		statusData.setMaxHeath(bukkitOfflinePlayer, maxhealth);
 	}
 
+	@Override
+	public int hashCode() {
+		return bukkitOfflinePlayer.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return bukkitOfflinePlayer.equals(obj);
+	}
+
 }
