@@ -142,6 +142,34 @@ public class ExtendedOfflinePlayer {
 		statusData.setMaxHeath(bukkitOfflinePlayer, maxhealth);
 	}
 
+	public float getExp() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
+		return expData.getExp(bukkitOfflinePlayer);
+	}
+
+	public void setExp(float exp) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
+		expData.setExp(bukkitOfflinePlayer, exp);
+	}
+
+	public int getLevel() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
+		return expData.getLevel(bukkitOfflinePlayer);
+	}
+
+	public void setLevel(int level) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
+		expData.setLevel(bukkitOfflinePlayer, level);
+	}
+
 	@Override
 	public int hashCode() {
 		return bukkitOfflinePlayer.hashCode();
