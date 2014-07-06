@@ -17,32 +17,46 @@
 
 package offlineplayerutils.internal.v1_7_R3;
 
+import net.minecraft.server.v1_7_R3.NBTTagCompound;
+
 import org.bukkit.OfflinePlayer;
 
 public class ExpData {
 
 	public float getExp(OfflinePlayer player) {
-		return 0;
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 	public void setExp(OfflinePlayer player, float exp) {
-
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			DataUtils.saveData(player, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getLevel(OfflinePlayer player) {
-		return 0;
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 	public void setLevel(OfflinePlayer player, int level) {
-
-	}
-
-	public int getExpToLevel(OfflinePlayer player) {
-		return 0;
-	}
-
-	public void giveExp(OfflinePlayer player, int exp) {
-
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			DataUtils.saveData(player, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

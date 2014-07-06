@@ -36,7 +36,7 @@ public class StatusData implements StatusDataInterface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return -1;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class StatusData implements StatusDataInterface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return -1;
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class StatusData implements StatusDataInterface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return -1;
 	}
 
 	@Override
