@@ -17,7 +17,6 @@
 
 package offlineplayerutils;
 
-import offlineplayerutils.api.OfflinePlayerUtilsAPI;
 import offlineplayerutils.internal.InternalAccessor;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,7 +27,6 @@ public class OfflinePlayerUtils extends JavaPlugin {
 	public void onEnable() {
 		InternalAccessor.initialize(getServer());
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-		new OfflinePlayerUtilsAPI();
 	}
 
 }
