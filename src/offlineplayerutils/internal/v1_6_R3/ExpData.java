@@ -24,6 +24,7 @@ import org.bukkit.OfflinePlayer;
 
 public class ExpData implements ExpDataInterface {
 
+	@Override
 	public float getExp(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -34,6 +35,7 @@ public class ExpData implements ExpDataInterface {
 		return -1;
 	}
 
+	@Override
 	public void setExp(OfflinePlayer player, float exp) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -44,6 +46,7 @@ public class ExpData implements ExpDataInterface {
 		}
 	}
 
+	@Override
 	public int getLevel(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
@@ -54,6 +57,7 @@ public class ExpData implements ExpDataInterface {
 		return -1;
 	}
 
+	@Override
 	public void setLevel(OfflinePlayer player, int level) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
