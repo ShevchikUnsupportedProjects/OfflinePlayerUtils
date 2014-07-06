@@ -26,6 +26,7 @@ public class ExpData {
 	public float getExp(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
+			return data.getFloat("XpP");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,6 +36,7 @@ public class ExpData {
 	public void setExp(OfflinePlayer player, float exp) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
+			data.setFloat("XpP", exp);
 			DataUtils.saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,6 +46,7 @@ public class ExpData {
 	public int getLevel(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
+			return data.getInt("XpLevel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,6 +56,7 @@ public class ExpData {
 	public void setLevel(OfflinePlayer player, int level) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
+			data.setInt("XpLevel", level);
 			DataUtils.saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
