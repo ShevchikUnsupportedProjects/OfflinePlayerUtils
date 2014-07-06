@@ -38,6 +38,9 @@ public class ExtendedOfflinePlayer {
 		locationData = InternalAccessor.getInstance().newLocationData();
 	}
 
+	public OfflinePlayer getBukkitOfflinePlayer() {
+		return bukkitOfflinePlayer;
+	}
 
 	public ItemStack[] getInventoryContents() {
 		return inventoryData.getInventoryContents(bukkitOfflinePlayer);
