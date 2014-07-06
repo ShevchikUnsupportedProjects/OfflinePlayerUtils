@@ -23,7 +23,6 @@ import offlineplayerutils.internal.LocationDataInterface;
 import offlineplayerutils.internal.StatusDataInterface;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class ExtendedOfflinePlayer {
@@ -49,10 +48,6 @@ public class ExtendedOfflinePlayer {
 	public void stopEditSession() {
 		editsessionstarted = false;
 		OfflinePlayerUtilsAPI.removeOfflinePlayerWithActiveEditSession(this);
-	}
-
-	public boolean isTheSamePlayer(Player player) {
-		return bukkitOfflinePlayer.equals(player);
 	}
 
 	public OfflinePlayer getBukkitOfflinePlayer() {
