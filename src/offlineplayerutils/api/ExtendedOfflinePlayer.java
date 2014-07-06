@@ -17,6 +17,7 @@
 
 package offlineplayerutils.api;
 
+import offlineplayerutils.internal.ExpDataInterface;
 import offlineplayerutils.internal.InternalAccessor;
 import offlineplayerutils.internal.InventoryDataInterface;
 import offlineplayerutils.internal.LocationDataInterface;
@@ -33,11 +34,14 @@ public class ExtendedOfflinePlayer {
 	private InventoryDataInterface inventoryData;
 	private LocationDataInterface locationData;
 	private StatusDataInterface statusData;
+	private ExpDataInterface expData;
 
 	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer) {
 		this.bukkitOfflinePlayer = bukkitOfflinePlayer;
 		inventoryData = InternalAccessor.getInstance().newInvnetoryData();
 		locationData = InternalAccessor.getInstance().newLocationData();
+		statusData = InternalAccessor.getInstance().newStatusData();
+		expData = InternalAccessor.getInstance().newExpData();
 	}
 
 	public void startEditSession() {

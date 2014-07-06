@@ -42,6 +42,14 @@ public class InternalAccessor {
 		return (LocationDataInterface) createObject(LocationDataInterface.class, "LocationData");
 	}
 
+	public StatusDataInterface newStatusData() {
+		return (StatusDataInterface) createObject(StatusDataInterface.class, "StatusData");
+	}
+
+	public ExpDataInterface newExpData() {
+		return (ExpDataInterface) createObject(ExpDataInterface.class, "ExpData");
+	}
+
 	public WorldUUIDToNameResolverInterface newWorldUUIDToNameResolver() {
 		return (WorldUUIDToNameResolverInterface) createObject(WorldUUIDToNameResolverInterface.class, "WorldUUIDToNameResolver");
 	}
