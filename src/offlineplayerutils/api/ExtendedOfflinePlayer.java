@@ -60,50 +60,86 @@ public class ExtendedOfflinePlayer {
 	}
 
 	public ItemStack[] getInventoryContents() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		return inventoryData.getInventoryContents(bukkitOfflinePlayer);
 	}
 
 	public ItemStack[] getArmorContents() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		return inventoryData.getArmorContents(bukkitOfflinePlayer);
 	}
 
 	public void setInventoryContents(ItemStack[] contents) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		inventoryData.setInventoryContents(bukkitOfflinePlayer, contents);
 	}
 
 	public void setArmorContents(ItemStack[] contents) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		inventoryData.setArmorContents(bukkitOfflinePlayer, contents);
 	}
 
 	public LocationInfo getLocation() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		return locationData.getLocation(bukkitOfflinePlayer);
 	}
 
 	public void setLocation(LocationInfo location) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		locationData.setLocation(bukkitOfflinePlayer, location);
 	}
 
 	public int getFoodLevel() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		return statusData.getFoodLevel(bukkitOfflinePlayer);
 	}
 
 	public void setFoodLevel(int foodlevel) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		statusData.setFoodLevel(bukkitOfflinePlayer, foodlevel);
 	}
 
 	public float getHealth() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		return statusData.getHealth(bukkitOfflinePlayer);
 	}
 
 	public void setHealth(float health) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		statusData.setHealth(bukkitOfflinePlayer, health);
 	}
 
 	public float getMaxHealth() {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		return statusData.getMaxHealth(bukkitOfflinePlayer);
 	}
 
 	public void setMaxHealth(float maxhealth) {
+		if (!editsessionstarted) {
+			throw new EditSessionNotStartedException();
+		}
 		statusData.setMaxHeath(bukkitOfflinePlayer, maxhealth);
 	}
 
