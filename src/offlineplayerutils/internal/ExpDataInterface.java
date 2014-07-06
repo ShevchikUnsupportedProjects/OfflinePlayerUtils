@@ -29,10 +29,4 @@ public interface ExpDataInterface {
 
 	public void setLevel(OfflinePlayer player, int level);
 
-	public int getExpToLevel(OfflinePlayer player);
-
-	public void giveExp(OfflinePlayer player, int exp);
-	
-	public void giveExpLevels(OfflinePlayer player, int levels);
-
 }
