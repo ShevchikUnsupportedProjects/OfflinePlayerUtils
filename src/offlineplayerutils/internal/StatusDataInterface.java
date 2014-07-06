@@ -17,6 +17,7 @@
 
 package offlineplayerutils.internal;
 
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 
 public interface StatusDataInterface {
@@ -32,5 +33,9 @@ public interface StatusDataInterface {
 	public float getMaxHealth(OfflinePlayer player);
 
 	public void setMaxHeath(OfflinePlayer player, float maxhealth);
+
+	public GameMode getGameMode(OfflinePlayer player);
+
+	public void setGameMode(OfflinePlayer player, GameMode mode);
 
 }

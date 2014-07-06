@@ -24,6 +24,7 @@ import net.minecraft.server.v1_6_R3.NBTTagInt;
 import net.minecraft.server.v1_6_R3.NBTTagShort;
 import offlineplayerutils.internal.StatusDataInterface;
 
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 
 public class StatusData implements StatusDataInterface {
@@ -107,6 +108,30 @@ public class StatusData implements StatusDataInterface {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
 			data.setFloat("Bukkit.MaxHealth", maxhealth);
+			DataUtils.saveData(player, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public GameMode getGameMode(OfflinePlayer player) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			return GameMode.getByValue(data.getInt("playerGameType"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void setGameMode(OfflinePlayer player, GameMode mode) {
+		try {
+			NBTTagCompound data = DataUtils.getData(player);
+			data.setInt("playerGameType", mode.getValue());
 			DataUtils.saveData(player, data);
 		} catch (Exception e) {
 			e.printStackTrace();
