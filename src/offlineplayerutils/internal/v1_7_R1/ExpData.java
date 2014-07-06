@@ -18,10 +18,11 @@
 package offlineplayerutils.internal.v1_7_R1;
 
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
+import offlineplayerutils.internal.ExpDataInterface;
 
 import org.bukkit.OfflinePlayer;
 
-public class ExpData {
+public class ExpData implements ExpDataInterface {
 
 	public float getExp(OfflinePlayer player) {
 		try {
