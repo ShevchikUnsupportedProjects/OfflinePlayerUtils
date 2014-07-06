@@ -15,7 +15,7 @@
  *
  */
 
-package offlineplayerutils.internal.v1_7_R2;
+package offlineplayerutils.internal.v1_7_R3;
 
 import org.bukkit.OfflinePlayer;
 
