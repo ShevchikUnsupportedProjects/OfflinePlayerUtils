@@ -44,9 +44,5 @@ public class ExpData {
 	public void giveExp(OfflinePlayer player, int exp) {
 
 	}
-	
-	public void giveExpLevels(OfflinePlayer player, int levels) {
-
-	}
 
 }
