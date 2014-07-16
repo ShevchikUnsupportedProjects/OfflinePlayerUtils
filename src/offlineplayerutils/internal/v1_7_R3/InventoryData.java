@@ -17,26 +17,26 @@
 
 package offlineplayerutils.internal.v1_7_R3;
 
+import net.minecraft.server.v1_7_R3.ItemStack;
 import net.minecraft.server.v1_7_R3.NBTTagCompound;
 import net.minecraft.server.v1_7_R3.NBTTagList;
 import offlineplayerutils.internal.InventoryDataInterface;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
-import org.bukkit.inventory.ItemStack;
 
 public class InventoryData implements InventoryDataInterface {
 
 	@Override
-	public ItemStack[] getInventoryContents(OfflinePlayer player) {
+	public org.bukkit.inventory.ItemStack[] getInventoryContents(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
 			NBTTagList nbttaglist = data.getList("Inventory", 10);
-			ItemStack[] items = new ItemStack[36];
+			org.bukkit.inventory.ItemStack[] items = new org.bukkit.inventory.ItemStack[36];
 	        for (int i = 0; i < nbttaglist.size(); ++i) {
 	            NBTTagCompound nbttagcompound = nbttaglist.get(i);
 	            int j = nbttagcompound.getByte("Slot") & 255;
-	            ItemStack itemstack = CraftItemStack.asCraftMirror(net.minecraft.server.v1_7_R3.ItemStack.createStack(nbttagcompound));
+	            org.bukkit.inventory.ItemStack itemstack = CraftItemStack.asCraftMirror(ItemStack.createStack(nbttagcompound));
 	            if (itemstack != null) {
 	                if (j >= 0 && j < 36) {
 	                    items[j] = itemstack;
@@ -51,15 +51,15 @@ public class InventoryData implements InventoryDataInterface {
 	}
 
 	@Override
-	public ItemStack[] getArmorContents(OfflinePlayer player) {
+	public org.bukkit.inventory.ItemStack[] getArmorContents(OfflinePlayer player) {
 		try {
 			NBTTagCompound data = DataUtils.getData(player);
 			NBTTagList nbttaglist = data.getList("Inventory", 10);
-			ItemStack[] armor = new ItemStack[4];
+			org.bukkit.inventory.ItemStack[] armor = new org.bukkit.inventory.ItemStack[4];
 	        for (int i = 0; i < nbttaglist.size(); ++i) {
 	            NBTTagCompound nbttagcompound = nbttaglist.get(i);
 	            int j = nbttagcompound.getByte("Slot") & 255;
-	            ItemStack itemstack = CraftItemStack.asCraftMirror(net.minecraft.server.v1_7_R3.ItemStack.createStack(nbttagcompound));
+	            org.bukkit.inventory.ItemStack itemstack = CraftItemStack.asCraftMirror(ItemStack.createStack(nbttagcompound));
 	            if (itemstack != null) {
 	                if (j >= 100 && j < 104) {
 	                	armor[j] = itemstack;
@@ -74,10 +74,10 @@ public class InventoryData implements InventoryDataInterface {
 	}
 
 	@Override
-	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents) {
+	public void setInventoryContents(OfflinePlayer player, org.bukkit.inventory.ItemStack[] contents) {
 		try {
-			ItemStack[] items = new ItemStack[36];
-			ItemStack[] armor = getArmorContents(player);
+			org.bukkit.inventory.ItemStack[] items = new org.bukkit.inventory.ItemStack[36];
+			org.bukkit.inventory.ItemStack[] armor = getArmorContents(player);
 			if (contents != null) {
 				for (int c = 0; c < 36; c++) {
 					if (c < contents.length && contents[c] != null) {
@@ -94,10 +94,10 @@ public class InventoryData implements InventoryDataInterface {
 	}
 
 	@Override
-	public void setArmorContents(OfflinePlayer player, ItemStack[] contents) {
+	public void setArmorContents(OfflinePlayer player, org.bukkit.inventory.ItemStack[] contents) {
 		try {
-			ItemStack[] items = getInventoryContents(player);
-			ItemStack[] armor = new ItemStack[4];
+			org.bukkit.inventory.ItemStack[] items = getInventoryContents(player);
+			org.bukkit.inventory.ItemStack[] armor = new org.bukkit.inventory.ItemStack[4];
 			if (contents != null) {
 				for (int c = 0; c < 4; c++) {
 					if (c < contents.length && contents[c] != null) {
@@ -113,7 +113,7 @@ public class InventoryData implements InventoryDataInterface {
 		}
 	}
 
-	private NBTTagCompound saveInvToNBT(NBTTagCompound data, ItemStack[] items, ItemStack[] armor) {
+	private NBTTagCompound saveInvToNBT(NBTTagCompound data, org.bukkit.inventory.ItemStack[] items, org.bukkit.inventory.ItemStack[] armor) {
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < items.length; ++i) {
             if (items[i] != null) {
