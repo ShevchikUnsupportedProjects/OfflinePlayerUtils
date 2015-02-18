@@ -42,52 +42,51 @@ public class Commands implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("get")) {
 					OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
 					ExtendedOfflinePlayer eplayer = OfflinePlayerUtilsAPI.getExtendedOfflinePlayer(player);
-					try {
-						eplayer.startEditSession();
-						switch (args[2]) {
-							case "inventory": {
-								executor.getInventory().setContents(eplayer.getInventoryContents());
-								executor.sendMessage("Applied "+player.getName()+" inventory to you");
-								return true;
-							}
-							case "armor": {
-								executor.getInventory().setArmorContents(eplayer.getArmorContents());
-								executor.sendMessage("Applied "+player.getName()+" armor to you");
-								return true;
-							}
-							case "location": {
-								LocationInfo linfo = eplayer.getLocation();
-								if (linfo.getLocation() != null) {
-									executor.teleport(linfo.getLocation());
-									executor.sendMessage("Tepeorted you to "+player.getName()+" location");
-								} else {
-									executor.sendMessage(player.getName()+" location: "+linfo);
-								}
-								return true;
-							}
-							case "health": {
-								executor.sendMessage(player.getName()+" health: "+eplayer.getHealth());
-								return true;
-							}
-							case "maxhealth": {
-								executor.sendMessage(player.getName()+" maxhealth: "+eplayer.getMaxHealth());
-								return true;
-							}
-							case "food": {
-								executor.sendMessage(player.getName()+" food: "+eplayer.getFoodLevel());
-								return true;
-							}
-							case "xp": {
-								executor.sendMessage(player.getName()+" xp percent: "+eplayer.getExp());
-								return true;
-							}
-							case "level": {
-								executor.sendMessage(player.getName()+" level: "+eplayer.getLevel());
-								return true;
-							}
+					switch (args[2]) {
+						case "inventory": {
+							executor.getInventory().setContents(eplayer.getInventoryContents());
+							executor.sendMessage("Applied "+player.getName()+" inventory to you");
+							return true;
 						}
-					} finally {
-						eplayer.stopEditSession();
+						case "armor": {
+							executor.getInventory().setArmorContents(eplayer.getArmorContents());
+							executor.sendMessage("Applied "+player.getName()+" armor to you");
+							return true;
+						}
+						case "location": {
+							LocationInfo linfo = eplayer.getLocation();
+							if (linfo.getLocation() != null) {
+								executor.teleport(linfo.getLocation());
+								executor.sendMessage("Tepeorted you to "+player.getName()+" location");
+							} else {
+								executor.sendMessage(player.getName()+" location: "+linfo);
+							}
+							return true;
+						}
+						case "health": {
+							executor.sendMessage(player.getName()+" health: "+eplayer.getHealth());
+							return true;
+						}
+						case "maxhealth": {
+							executor.sendMessage(player.getName()+" maxhealth: "+eplayer.getMaxHealth());
+							return true;
+						}
+						case "food": {
+							executor.sendMessage(player.getName()+" food: "+eplayer.getFoodLevel());
+							return true;
+						}
+						case "gamemode": {
+							executor.sendMessage(player.getName()+" gamemode: "+eplayer.getGameMode());
+							return true;
+						}
+						case "xp": {
+							executor.sendMessage(player.getName()+" xp percent: "+eplayer.getExp());
+							return true;
+						}
+						case "level": {
+							executor.sendMessage(player.getName()+" level: "+eplayer.getLevel());
+							return true;
+						}
 					}
 				}
 			}

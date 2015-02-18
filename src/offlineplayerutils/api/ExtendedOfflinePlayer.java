@@ -26,31 +26,21 @@ import offlineplayerutils.internal.impl.InventoryData;
 import offlineplayerutils.internal.impl.LocationData;
 import offlineplayerutils.internal.impl.StatusData;
 
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 
 public class ExtendedOfflinePlayer {
 
-	private boolean editsessionstarted = false;
+	private static final InventoryDataInterface inventoryData = new InventoryData();
+	private static final LocationDataInterface locationData = new LocationData();
+	private static final StatusDataInterface statusData = new StatusData();
+	private static final ExpDataInterface expData = new ExpData();
 
 	private OfflinePlayer bukkitOfflinePlayer;
-	private static InventoryDataInterface inventoryData = new InventoryData();
-	private LocationDataInterface locationData = new LocationData();
-	private StatusDataInterface statusData = new StatusData();
-	private ExpDataInterface expData = new ExpData();
 
 	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer) {
 		this.bukkitOfflinePlayer = bukkitOfflinePlayer;
-	}
-
-	public void startEditSession() {
-		OfflinePlayerUtilsAPI.addOfflinePlayerWithActiveEditSession(this);
-		editsessionstarted = true;
-	}
-
-	public void stopEditSession() {
-		editsessionstarted = false;
-		OfflinePlayerUtilsAPI.removeOfflinePlayerWithActiveEditSession(this);
 	}
 
 	public OfflinePlayer getBukkitOfflinePlayer() {
@@ -58,114 +48,74 @@ public class ExtendedOfflinePlayer {
 	}
 
 	public ItemStack[] getInventoryContents() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return inventoryData.getInventoryContents(bukkitOfflinePlayer);
 	}
 
 	public ItemStack[] getArmorContents() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return inventoryData.getArmorContents(bukkitOfflinePlayer);
 	}
 
 	public void setInventoryContents(ItemStack[] contents) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		inventoryData.setInventoryContents(bukkitOfflinePlayer, contents);
 	}
 
 	public void setArmorContents(ItemStack[] contents) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		inventoryData.setArmorContents(bukkitOfflinePlayer, contents);
 	}
 
 	public LocationInfo getLocation() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return locationData.getLocation(bukkitOfflinePlayer);
 	}
 
 	public void setLocation(LocationInfo location) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		locationData.setLocation(bukkitOfflinePlayer, location);
 	}
 
 	public int getFoodLevel() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return statusData.getFoodLevel(bukkitOfflinePlayer);
 	}
 
 	public void setFoodLevel(int foodlevel) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		statusData.setFoodLevel(bukkitOfflinePlayer, foodlevel);
 	}
 
 	public float getHealth() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return statusData.getHealth(bukkitOfflinePlayer);
 	}
 
 	public void setHealth(float health) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		statusData.setHealth(bukkitOfflinePlayer, health);
 	}
 
 	public float getMaxHealth() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return statusData.getMaxHealth(bukkitOfflinePlayer);
 	}
 
 	public void setMaxHealth(float maxhealth) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		statusData.setMaxHeath(bukkitOfflinePlayer, maxhealth);
 	}
 
+	public GameMode getGameMode() {
+		return statusData.getGameMode(bukkitOfflinePlayer);
+	}
+
+	public void setGameMode(GameMode gamemode) {
+		statusData.setGameMode(bukkitOfflinePlayer, gamemode);
+	}
+
 	public float getExp() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return expData.getExp(bukkitOfflinePlayer);
 	}
 
 	public void setExp(float exp) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		expData.setExp(bukkitOfflinePlayer, exp);
 	}
 
 	public int getLevel() {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		return expData.getLevel(bukkitOfflinePlayer);
 	}
 
 	public void setLevel(int level) {
-		if (!editsessionstarted) {
-			throw new EditSessionNotStartedException();
-		}
 		expData.setLevel(bukkitOfflinePlayer, level);
 	}
 

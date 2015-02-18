@@ -29,7 +29,6 @@ public class OfflinePlayerUtils extends JavaPlugin {
 		for (String command : this.getDescription().getCommands().keySet()) {
 			getCommand(command).setExecutor(commands);
 		}
-		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 	}
 
 }
