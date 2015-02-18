@@ -17,7 +17,7 @@
 
 package offlineplayerutils;
 
-import offlineplayerutils.internal.InternalAccessor;
+import offlineplayerutils.commands.Commands;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,7 +25,10 @@ public class OfflinePlayerUtils extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		InternalAccessor.initialize(getServer());
+		Commands commands = new Commands();
+		for (String command : this.getDescription().getCommands().keySet()) {
+			getCommand(command).setExecutor(commands);
+		}
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 	}
 

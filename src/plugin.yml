@@ -2,3 +2,5 @@ name: OfflinePlayerUtils
 main: offlineplayerutils.OfflinePlayerUtils
 version: 1.0
 author: _Shevchik_
+commands:
+  opu:

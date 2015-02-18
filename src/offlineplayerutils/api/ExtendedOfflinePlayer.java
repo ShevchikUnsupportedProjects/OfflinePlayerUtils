@@ -18,10 +18,13 @@
 package offlineplayerutils.api;
 
 import offlineplayerutils.internal.ExpDataInterface;
-import offlineplayerutils.internal.InternalAccessor;
 import offlineplayerutils.internal.InventoryDataInterface;
 import offlineplayerutils.internal.LocationDataInterface;
 import offlineplayerutils.internal.StatusDataInterface;
+import offlineplayerutils.internal.impl.ExpData;
+import offlineplayerutils.internal.impl.InventoryData;
+import offlineplayerutils.internal.impl.LocationData;
+import offlineplayerutils.internal.impl.StatusData;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
@@ -31,17 +34,13 @@ public class ExtendedOfflinePlayer {
 	private boolean editsessionstarted = false;
 
 	private OfflinePlayer bukkitOfflinePlayer;
-	private InventoryDataInterface inventoryData;
-	private LocationDataInterface locationData;
-	private StatusDataInterface statusData;
-	private ExpDataInterface expData;
+	private static InventoryDataInterface inventoryData = new InventoryData();
+	private LocationDataInterface locationData = new LocationData();
+	private StatusDataInterface statusData = new StatusData();
+	private ExpDataInterface expData = new ExpData();
 
 	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer) {
 		this.bukkitOfflinePlayer = bukkitOfflinePlayer;
-		inventoryData = InternalAccessor.getInstance().newInvnetoryData();
-		locationData = InternalAccessor.getInstance().newLocationData();
-		statusData = InternalAccessor.getInstance().newStatusData();
-		expData = InternalAccessor.getInstance().newExpData();
 	}
 
 	public void startEditSession() {
