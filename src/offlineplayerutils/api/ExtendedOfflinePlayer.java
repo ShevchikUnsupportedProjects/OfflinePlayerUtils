@@ -17,10 +17,13 @@
 
 package offlineplayerutils.api;
 
+import java.util.HashMap;
+
 import offlineplayerutils.internal.ExpDataInterface;
 import offlineplayerutils.internal.InventoryDataInterface;
 import offlineplayerutils.internal.LocationDataInterface;
 import offlineplayerutils.internal.StatusDataInterface;
+import offlineplayerutils.internal.impl.DataUtils;
 import offlineplayerutils.internal.impl.ExpData;
 import offlineplayerutils.internal.impl.InventoryData;
 import offlineplayerutils.internal.impl.LocationData;
@@ -117,6 +120,11 @@ public class ExtendedOfflinePlayer {
 
 	public void setLevel(int level) {
 		expData.setLevel(bukkitOfflinePlayer, level);
+	}
+
+	@SuppressWarnings("unchecked")
+	public HashMap<String, Object> getRawNBTData() {
+		return (HashMap<String, Object>) DataUtils.getData(bukkitOfflinePlayer).toJava();
 	}
 
 	@Override

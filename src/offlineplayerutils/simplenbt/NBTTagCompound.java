@@ -68,6 +68,15 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 		return this;
 	}
 
+	@Override
+	public Object toJava() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		for (Entry<String, NBTTagBase<?>> entry : getValue().entrySet()) {
+			map.put(entry.getKey(), entry.getValue().toJava());
+		}
+		return map;
+	}
+
 
 	public int size() {
 		return map.size();

@@ -55,4 +55,9 @@ public class NBTTagString extends NBTTagBase<String> {
 		return this;
 	}
 
+	@Override
+	public Object toJava() {
+		return string;
+	}
+
 }

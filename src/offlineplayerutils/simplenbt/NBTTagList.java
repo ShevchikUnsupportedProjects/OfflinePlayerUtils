@@ -72,6 +72,15 @@ public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<NB
 		return this;
 	}
 
+	@Override
+	public Object toJava() {
+		ArrayList<Object> list = new ArrayList<Object>();
+		for (NBTTagBase<?> value : getValue()) {
+			list.add(value.toJava());
+		}
+		return list;
+	}
+
 
 	public int size() {
 		return list.size();

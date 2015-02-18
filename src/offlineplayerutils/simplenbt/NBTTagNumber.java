@@ -114,4 +114,9 @@ public class NBTTagNumber<T extends Number> extends NBTTagBase<T> {
 		return this;
 	}
 
+	@Override
+	public Object toJava() {
+		return number;
+	}
+
 }

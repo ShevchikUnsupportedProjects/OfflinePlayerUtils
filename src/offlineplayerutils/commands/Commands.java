@@ -87,6 +87,10 @@ public class Commands implements CommandExecutor {
 							executor.sendMessage(player.getName()+" level: "+eplayer.getLevel());
 							return true;
 						}
+						case "raw": {
+							executor.sendMessage(eplayer.getRawNBTData().toString());
+							return true;
+						}
 					}
 				}
 			}

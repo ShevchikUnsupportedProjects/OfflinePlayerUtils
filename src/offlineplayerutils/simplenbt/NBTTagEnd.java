@@ -49,4 +49,9 @@ public class NBTTagEnd extends NBTTagBase<Object> {
 	public void setValue(Object value) {
 	}
 
+	@Override
+	public Object toJava() {
+		return null;
+	}
+
 }

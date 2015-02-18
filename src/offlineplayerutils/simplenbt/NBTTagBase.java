@@ -33,6 +33,8 @@ public abstract class NBTTagBase<T> {
 
 	protected abstract NBTTagBase<T> readValue(DataInputStream stream) throws IOException;
 
+	public abstract Object toJava();
+
 	@Override
 	public String toString() {
 		return String.valueOf(getValue());
