@@ -26,6 +26,10 @@ public class NBTTagByteArray extends NBTTagBase<byte[]> {
 	protected NBTTagByteArray() {
 	}
 
+	public NBTTagByteArray(byte[] array) {
+		this.array = array.clone();
+	}
+
 	private byte[] array;
 
 	@Override

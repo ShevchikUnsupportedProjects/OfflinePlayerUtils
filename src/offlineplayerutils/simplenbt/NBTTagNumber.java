@@ -28,6 +28,38 @@ public class NBTTagNumber<T extends Number> extends NBTTagBase<T> {
 		this.type = type;
 	}
 
+	public NBTTagNumber(T number) {
+		if (number == null) {
+			throw new IllegalArgumentException("Number cannot be null");
+		}
+		this.number = number;
+		if (number instanceof Byte) {
+			type = NBTTagType.BYTE;
+			return;
+		}
+		if (number instanceof Short) {
+			type = NBTTagType.SHORT;
+			return;
+		}
+		if (number instanceof Integer) {
+			type = NBTTagType.INT;
+			return;
+		}
+		if (number instanceof Long) {
+			type = NBTTagType.LONG;
+			return;
+		}
+		if (number instanceof Float) {
+			type = NBTTagType.FLOAT;
+			return;
+		}
+		if (number instanceof Double) {
+			type = NBTTagType.DOUBLE;
+			return;
+		}
+		throw new IllegalArgumentException("Number with type "+number.getClass().getSimpleName()+" is not supported");
+	}
+
 	private T number;
 
 	@Override

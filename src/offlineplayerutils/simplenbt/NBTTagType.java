@@ -17,16 +17,11 @@
 
 package offlineplayerutils.simplenbt;
 
-import org.apache.commons.lang.NotImplementedException;
-
 public enum NBTTagType {
 
 	END, BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BYTEARRAY, STRING, LIST, COMPOUND, INTARRAY;
 
 	protected static NBTTagBase<?> createTagFromType(byte typeId) {
-		if (typeId < 0 || typeId > values().length) {
-			throw new IllegalArgumentException("Unknown nbt tag typeId: "+typeId);
-		}
 		switch (typeId) {
 			case 0: {
 				return new NBTTagEnd();
@@ -65,7 +60,7 @@ public enum NBTTagType {
 				return new NBTTagIntArray();
 			}
 			default: {
-				throw new NotImplementedException("Tag with type typeId: "+typeId+" is not implemented yet");
+				throw new IllegalArgumentException("Unknown nbt tag type: "+typeId);
 			}
 		}
 	}
@@ -88,10 +83,6 @@ public enum NBTTagType {
 				return false;
 			}
 		}
-	}
-
-	public NBTTagBase<?> create() {
-		return createTagFromType(getTypeId());
 	}
 
 }

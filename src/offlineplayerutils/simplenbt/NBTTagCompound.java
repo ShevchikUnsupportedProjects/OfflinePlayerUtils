@@ -27,6 +27,9 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 
 	private HashMap<String, NBTTagBase<?>> map = new HashMap<String, NBTTagBase<?>>();
 
+	public NBTTagCompound() {
+	}
+
 	@Override
 	public NBTTagType getType() {
 		return NBTTagType.COMPOUND;
@@ -138,11 +141,8 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setByte(String key, byte value) {
-		NBTTagNumber<Byte> tag = (NBTTagNumber<Byte>) NBTTagType.BYTE.create();
-		tag.setValue(value);
-		map.put(key, tag);
+		map.put(key, new NBTTagNumber<Byte>(value));
 	}
 
 	public short getShort(String key) {
@@ -152,11 +152,8 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setShort(String key, short value) {
-		NBTTagNumber<Short> tag = (NBTTagNumber<Short>) NBTTagType.SHORT.create();
-		tag.setValue(value);
-		map.put(key, tag);
+		map.put(key, new NBTTagNumber<Short>(value));
 	}
 
 	public int getInt(String key) {
@@ -166,11 +163,8 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setInt(String key, int value) {
-		NBTTagNumber<Integer> tag = (NBTTagNumber<Integer>) NBTTagType.INT.create();
-		tag.setValue(value);
-		map.put(key, tag);
+		map.put(key, new NBTTagNumber<Integer>(value));
 	}
 
 	public long getLong(String key) {
@@ -180,11 +174,8 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setLong(String key, long value) {
-		NBTTagNumber<Long> tag = (NBTTagNumber<Long>) NBTTagType.LONG.create();
-		tag.setValue(value);
-		map.put(key, tag);
+		map.put(key, new NBTTagNumber<Long>(value));
 	}
 
 	public float getFloat(String key) {
@@ -194,11 +185,8 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setFloat(String key, float value) {
-		NBTTagNumber<Float> tag = (NBTTagNumber<Float>) NBTTagType.FLOAT.create();
-		tag.setValue(value);
-		map.put(key, tag);
+		map.put(key, new NBTTagNumber<Float>(value));
 	}
 
 	public double getDouble(String key) {
@@ -208,11 +196,8 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setDouble(String key, double value) {
-		NBTTagNumber<Double> tag = (NBTTagNumber<Double>) NBTTagType.DOUBLE.create();
-		tag.setValue(value);
-		map.put(key, tag);
+		map.put(key, new NBTTagNumber<Double>(value));
 	}
 
 	public String getString(String key) {
@@ -223,9 +208,7 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 	}
 
 	public void setString(String key, String value) {
-		NBTTagString tag = (NBTTagString) NBTTagType.STRING.create();
-		tag.setValue(value);
-		map.put(key, tag);
+		map.put(key, new NBTTagString(value));
 	}
 
 }

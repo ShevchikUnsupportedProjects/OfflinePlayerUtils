@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<NBTTagBase<?>>> {
 
-	protected NBTTagList() {
+	public NBTTagList() {
 	}
 
 	private ArrayList<T> list = new ArrayList<T>();

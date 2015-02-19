@@ -26,6 +26,10 @@ public class NBTTagIntArray extends NBTTagBase<int[]> {
 	protected NBTTagIntArray() {
 	}
 
+	public NBTTagIntArray(int[] array) {
+		this.array = array.clone();
+	}
+
 	private int[] array;
 
 	@Override

@@ -18,7 +18,6 @@
 package offlineplayerutils.internal.itemstack;
 
 import offlineplayerutils.simplenbt.NBTTagCompound;
-import offlineplayerutils.simplenbt.NBTTagType;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +36,7 @@ public class ItemStackSerializer {
 	}
 
 	private static NBTTagCompound fromBukkit(ItemStack itemstack) {
-		NBTTagCompound compound = (NBTTagCompound) NBTTagType.COMPOUND.create();
+		NBTTagCompound compound = new NBTTagCompound();
 		WrappedItemStack wrappedstack = new WrappedItemStack(compound);
 		wrappedstack.setType(itemstack.getType());
 		wrappedstack.setAmount(itemstack.getAmount());

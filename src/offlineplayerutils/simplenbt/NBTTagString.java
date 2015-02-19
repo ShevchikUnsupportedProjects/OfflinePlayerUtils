@@ -26,6 +26,10 @@ public class NBTTagString extends NBTTagBase<String> {
 	protected NBTTagString() {
 	}
 
+	public NBTTagString(String string) {
+		this.string = string;
+	}
+
 	private String string;
 
 	@Override
