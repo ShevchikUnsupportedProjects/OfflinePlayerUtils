@@ -39,9 +39,9 @@ public class Commands implements CommandExecutor {
 		Player executor = (Player) sender;
 		if (sender.hasPermission("opu.use")) {
 			if (args.length >= 3) {
+				OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+				ExtendedOfflinePlayer eplayer = OfflinePlayerUtilsAPI.getExtendedOfflinePlayer(player);
 				if (args[0].equalsIgnoreCase("get")) {
-					OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-					ExtendedOfflinePlayer eplayer = OfflinePlayerUtilsAPI.getExtendedOfflinePlayer(player);
 					switch (args[2]) {
 						case "inventory": {
 							executor.getInventory().setContents(eplayer.getInventoryContents());
@@ -57,7 +57,7 @@ public class Commands implements CommandExecutor {
 							LocationInfo linfo = eplayer.getLocation();
 							if (linfo.getLocation() != null) {
 								executor.teleport(linfo.getLocation());
-								executor.sendMessage("Tepeorted you to "+player.getName()+" location");
+								executor.sendMessage("Teleported you to "+player.getName()+" location");
 							} else {
 								executor.sendMessage(player.getName()+" location: "+linfo);
 							}
@@ -89,6 +89,69 @@ public class Commands implements CommandExecutor {
 						}
 						case "raw": {
 							executor.sendMessage(eplayer.getRawNBTData().toString());
+							return true;
+						}
+					}
+				} else if (args[0].equalsIgnoreCase("set")) {
+					switch (args[2]) {
+						case "inventory": {
+							eplayer.setInventoryContents(executor.getInventory().getContents());
+							executor.sendMessage("Applied your inventory to "+player.getName());
+							return true;
+						}
+						case "armor": {
+							eplayer.setArmorContents(executor.getInventory().getArmorContents());
+							executor.sendMessage("Applied your armor to "+player.getName());
+							return true;
+						}
+						case "location": {
+							eplayer.setLocation(new LocationInfo(executor.getLocation()));
+							executor.sendMessage("Applied your location to "+player.getName());
+							return true;
+						}
+						case "health": {
+							if (args.length < 4) {
+								return false;
+							}
+							eplayer.setHealth(Float.parseFloat(args[3]));
+							executor.sendMessage("Set "+player.getName()+" health to "+args[3]);
+							return true;
+						}
+						case "maxhealth": {
+							if (args.length < 4) {
+								return false;
+							}
+							eplayer.setMaxHealth(Float.parseFloat(args[3]));
+							executor.sendMessage("Set "+player.getName()+" maxhealth to "+args[3]);
+							return true;
+						}
+						case "food": {
+							if (args.length < 4) {
+								return false;
+							}
+							eplayer.setFoodLevel(Integer.parseInt(args[3]));
+							executor.sendMessage("Set "+player.getName()+" food to "+args[3]);
+							return true;
+						}
+						case "gamemode": {
+							eplayer.setGameMode(executor.getGameMode());
+							executor.sendMessage("Applied your gamemode to "+player.getName());
+							return true;
+						}
+						case "xp": {
+							if (args.length < 4) {
+								return false;
+							}
+							eplayer.setExp(executor.getExp());
+							executor.sendMessage("Applied your xp percent to "+player.getName());
+							return true;
+						}
+						case "level": {
+							if (args.length < 4) {
+								return false;
+							}
+							eplayer.setLevel(executor.getLevel());
+							executor.sendMessage("Applied your level to "+player.getName());
 							return true;
 						}
 					}

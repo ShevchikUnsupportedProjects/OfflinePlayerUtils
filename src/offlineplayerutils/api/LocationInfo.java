@@ -49,11 +49,11 @@ public class LocationInfo {
 	}
 
 	public double getY() {
-		return x;
+		return y;
 	}
 
 	public double getZ() {
-		return x;
+		return z;
 	}
 
 	public Location getLocation() {

@@ -58,6 +58,7 @@ public class NBTTagCompound extends NBTTagBase<HashMap<String, NBTTagBase<?>>> {
 			stream.writeUTF(entry.getKey());
 			entry.getValue().writeValue(stream);
 		}
+		stream.writeByte(0);
 		return this;
 	}
 

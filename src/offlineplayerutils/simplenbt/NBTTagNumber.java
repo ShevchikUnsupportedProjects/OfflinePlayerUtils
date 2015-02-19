@@ -57,7 +57,7 @@ public class NBTTagNumber<T extends Number> extends NBTTagBase<T> {
 			type = NBTTagType.DOUBLE;
 			return;
 		}
-		throw new IllegalArgumentException("Number with type "+number.getClass().getSimpleName()+" is not supported");
+		throw new IllegalArgumentException("Number type "+number.getClass().getSimpleName()+" is not supported");
 	}
 
 	private T number;

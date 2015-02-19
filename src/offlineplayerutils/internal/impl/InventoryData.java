@@ -101,11 +101,13 @@ public class InventoryData implements InventoryDataInterface {
 	private NBTTagCompound setItems(NBTTagCompound data, HashMap<Integer, ItemStack> items) {
 		NBTTagList<NBTTagCompound> nbttaglist = new NBTTagList<NBTTagCompound>();
 		for (Entry<Integer, ItemStack> entry : items.entrySet()) {
-        	NBTTagCompound slotinfo = ItemStackSerializer.saveToNBT(entry.getValue());
-        	if (slotinfo != null) {
-        		slotinfo.setByte("Slot", entry.getKey().byteValue());
-        	}
-        	nbttaglist.add(slotinfo);
+			if (entry.getValue() != null) {
+	        	NBTTagCompound slotinfo = ItemStackSerializer.saveToNBT(entry.getValue());
+	        	if (slotinfo != null) {
+	        		slotinfo.setByte("Slot", entry.getKey().byteValue());
+	        	}
+	        	nbttaglist.add(slotinfo);
+			}
 		}
 		data.set("Inventory", nbttaglist);
 		return data;
