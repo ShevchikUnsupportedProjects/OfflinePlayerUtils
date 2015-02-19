@@ -105,8 +105,8 @@ public class InventoryData implements InventoryDataInterface {
 	        	NBTTagCompound slotinfo = ItemStackSerializer.saveToNBT(entry.getValue());
 	        	if (slotinfo != null) {
 	        		slotinfo.setByte("Slot", entry.getKey().byteValue());
+		        	nbttaglist.add(slotinfo);
 	        	}
-	        	nbttaglist.add(slotinfo);
 			}
 		}
 		data.set("Inventory", nbttaglist);
