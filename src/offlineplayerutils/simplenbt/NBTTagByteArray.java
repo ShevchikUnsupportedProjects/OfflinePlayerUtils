@@ -62,7 +62,7 @@ public class NBTTagByteArray extends NBTTagBase<byte[]> {
 	}
 
 	@Override
-	public Object toJava() {
+	public byte[] toJava() {
 		return array.clone();
 	}
 

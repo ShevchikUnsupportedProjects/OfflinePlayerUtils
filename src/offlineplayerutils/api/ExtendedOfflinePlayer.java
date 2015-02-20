@@ -122,9 +122,8 @@ public class ExtendedOfflinePlayer {
 		expData.setLevel(bukkitOfflinePlayer, level);
 	}
 
-	@SuppressWarnings("unchecked")
 	public HashMap<String, Object> getRawNBTData() {
-		return (HashMap<String, Object>) DataUtils.getData(bukkitOfflinePlayer).toJava();
+		return DataUtils.getData(bukkitOfflinePlayer).toJava();
 	}
 
 	@Override

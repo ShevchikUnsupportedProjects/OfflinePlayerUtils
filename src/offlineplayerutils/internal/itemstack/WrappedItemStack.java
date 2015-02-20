@@ -17,12 +17,14 @@
 
 package offlineplayerutils.internal.itemstack;
 
+import offlineplayerutils.internal.itemstack.meta.MetaSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class WrappedItemStack extends ItemStack {
 
@@ -34,6 +36,21 @@ public class WrappedItemStack extends ItemStack {
 
 	protected NBTTagCompound getTag() {
 		return tag;
+	}
+
+	@Override
+	public ItemStack clone() {
+		return new WrappedItemStack((NBTTagCompound) tag.clone());
+	}
+
+	@Override
+	public boolean hasItemMeta() {
+		return tag.hasOfType("tag", NBTTagType.COMPOUND);
+	}
+
+	@Override
+	public ItemMeta getItemMeta() {
+		return MetaSerializer.createMetaFromTag(getType(), (NBTTagCompound) tag.get("tag"));
 	}
 
 	@SuppressWarnings("deprecation")

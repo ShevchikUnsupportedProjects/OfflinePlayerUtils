@@ -17,6 +17,7 @@
 
 package offlineplayerutils.internal.itemstack;
 
+import offlineplayerutils.internal.itemstack.meta.MetaSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
 import org.bukkit.inventory.ItemStack;
@@ -41,6 +42,9 @@ public class ItemStackSerializer {
 		wrappedstack.setType(itemstack.getType());
 		wrappedstack.setAmount(itemstack.getAmount());
 		wrappedstack.setDurability(itemstack.getDurability());
+		if (itemstack.hasItemMeta()) {
+			wrappedstack.getTag().set("tag", MetaSerializer.createTagFromMeta(wrappedstack.getType(), itemstack.getItemMeta()));
+		}
 		return wrappedstack.getTag();
 	}
 

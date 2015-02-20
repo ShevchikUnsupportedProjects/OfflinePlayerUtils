@@ -86,8 +86,7 @@ public class InventoryData implements InventoryDataInterface {
 		HashMap<Integer, ItemStack> items = new HashMap<Integer, ItemStack>();
 		if (data.hasListOfType("Inventory", NBTTagType.COMPOUND)) {
 			NBTTagList<NBTTagCompound> nbttaglist = (NBTTagList<NBTTagCompound>) data.get("Inventory");
-	        for (int i = 0; i < nbttaglist.size(); ++i) {
-	            NBTTagCompound slotinfo = nbttaglist.get(i);
+	        for (NBTTagCompound slotinfo : nbttaglist) {
 	            int slot = slotinfo.getByte("Slot") & 255;
 	            ItemStack itemstack = ItemStackSerializer.createItemStack(slotinfo);
 	            if (itemstack != null) {

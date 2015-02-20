@@ -66,7 +66,7 @@ public class NBTTagIntArray extends NBTTagBase<int[]> {
 	}
 
 	@Override
-	public Object toJava() {
+	public int[] toJava() {
 		return array.clone();
 	}
 

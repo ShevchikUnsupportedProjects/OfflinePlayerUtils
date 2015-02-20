@@ -17,6 +17,8 @@
 
 package offlineplayerutils.simplenbt;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -33,11 +35,37 @@ public abstract class NBTTagBase<T> {
 
 	protected abstract NBTTagBase<T> readValue(DataInputStream stream) throws IOException;
 
+	@SuppressWarnings("unchecked")
+	public NBTTagBase<?> clone() {
+		try {
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			writeValue(new DataOutputStream(stream));
+			return (NBTTagBase<T>) NBTTagType.createTagFromType(getType().getTypeId()).readValue(new DataInputStream(new ByteArrayInputStream(stream.toByteArray())));
+		} catch (IOException e) {
+		}
+		return null;
+	}
+
 	public abstract Object toJava();
 
 	@Override
 	public String toString() {
 		return String.valueOf(getValue());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof NBTTagBase)) {
+			return false;
+		}
+		NBTTagBase<T> othertag = (NBTTagBase<T>) other;
+		return getValue().equals(othertag.getValue());
+	}
+
+	@Override
+	public int hashCode() {
+		return getValue().hashCode();
 	}
 
 }

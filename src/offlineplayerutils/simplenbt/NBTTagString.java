@@ -60,7 +60,7 @@ public class NBTTagString extends NBTTagBase<String> {
 	}
 
 	@Override
-	public Object toJava() {
+	public String toJava() {
 		return string;
 	}
 

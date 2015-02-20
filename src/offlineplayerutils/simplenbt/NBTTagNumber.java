@@ -147,7 +147,7 @@ public class NBTTagNumber<T extends Number> extends NBTTagBase<T> {
 	}
 
 	@Override
-	public Object toJava() {
+	public Number toJava() {
 		return number;
 	}
 

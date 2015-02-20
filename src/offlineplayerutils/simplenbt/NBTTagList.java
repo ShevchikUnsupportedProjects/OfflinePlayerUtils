@@ -21,13 +21,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<NBTTagBase<?>>> {
+public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<T>> implements Iterable<T> {
 
 	public NBTTagList() {
 	}
 
-	private ArrayList<T> list = new ArrayList<T>();
+	protected ArrayList<T> list = new ArrayList<T>();
 
 	@Override
 	public NBTTagType getType() {
@@ -36,18 +37,18 @@ public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<NB
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<NBTTagBase<?>> getValue() {
-		return (ArrayList<NBTTagBase<?>>) list.clone();
+	public ArrayList<T> getValue() {
+		return (ArrayList<T>) list.clone();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void setValue(ArrayList<NBTTagBase<?>> value) {
+	public void setValue(ArrayList<T> value) {
 		list = (ArrayList<T>) value.clone();
 	}
 
 	@Override
-	protected NBTTagBase<ArrayList<NBTTagBase<?>>> writeValue(DataOutputStream stream) throws IOException {
+	protected NBTTagBase<ArrayList<T>> writeValue(DataOutputStream stream) throws IOException {
 		if (list.isEmpty()) {
 			stream.writeByte(0);
 		} else {
@@ -62,7 +63,7 @@ public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<NB
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected NBTTagBase<ArrayList<NBTTagBase<?>>> readValue(DataInputStream stream) throws IOException {
+	protected NBTTagBase<ArrayList<T>> readValue(DataInputStream stream) throws IOException {
 		list.clear();
 		byte typeId = stream.readByte();
 		int size = stream.readInt();
@@ -73,14 +74,13 @@ public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<NB
 	}
 
 	@Override
-	public Object toJava() {
+	public ArrayList<?> toJava() {
 		ArrayList<Object> list = new ArrayList<Object>();
 		for (NBTTagBase<?> value : getValue()) {
 			list.add(value.toJava());
 		}
 		return list;
 	}
-
 
 	public int size() {
 		return list.size();
@@ -108,6 +108,29 @@ public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<NB
 		} else {
 			return list.get(0).getType();
 		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new NBTTagListIterator();
+	}
+
+	private class NBTTagListIterator implements Iterator<T> {
+
+		private int i = 0;
+
+		@Override
+		public boolean hasNext() {
+			return i < list.size();
+		}
+
+		@Override
+		public T next() {
+			T value = list.get(i);
+			i++;
+			return value;
+		}
+
 	}
 
 }
