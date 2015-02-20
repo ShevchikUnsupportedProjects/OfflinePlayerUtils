@@ -33,7 +33,11 @@ public class WrappedItemStack extends ItemStack {
 
 	public WrappedItemStack(NBTTagCompound data) {
 		tag = data;
-		itemmeta = MetaSerializer.createMetaFromTag(getType(), (NBTTagCompound) tag.get("tag"));
+		if (hasItemMeta()) {
+			itemmeta = MetaSerializer.createMetaFromTag(getType(), (NBTTagCompound) tag.get("tag"));
+		} else {
+			itemmeta = Bukkit.getItemFactory().getItemMeta(getType());
+		}
 	}
 
 	protected NBTTagCompound getTag() {

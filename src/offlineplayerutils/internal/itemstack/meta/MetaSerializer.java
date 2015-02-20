@@ -31,9 +31,6 @@ import org.bukkit.inventory.meta.Repairable;
 public class MetaSerializer {
 
 	public static ItemMeta createMetaFromTag(Material type, NBTTagCompound tag) {
-		if (tag == null) {
-			tag = new NBTTagCompound();
-		}
 		ItemMeta bukkit = Bukkit.getItemFactory().getItemMeta(type);
 		WrappedItemMeta wrapped = SpecificMetaSerializer.readSpecificFromNBT(bukkit, tag);
 		if (wrapped.hasDisplayName()) {
