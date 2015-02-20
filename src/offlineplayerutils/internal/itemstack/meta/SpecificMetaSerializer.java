@@ -22,6 +22,7 @@ import offlineplayerutils.simplenbt.NBTTagCompound;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public class SpecificMetaSerializer {
@@ -48,6 +49,14 @@ public class SpecificMetaSerializer {
 				if (skullwrapped.hasOwner()) {
 					skullbukkit.setOwner(skullwrapped.getOwner());
 				}
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof LeatherArmorMeta) {
+				LeatherArmorMeta leatherarmorbukkit = (LeatherArmorMeta) bukkit;
+				WrappedLeatherArmorrMeta leatherarmorwrapped = new WrappedLeatherArmorrMeta(tag);
+				leatherarmorbukkit.setColor(leatherarmorwrapped.getColor());
 			}
 		} catch (Throwable t) {
 		}

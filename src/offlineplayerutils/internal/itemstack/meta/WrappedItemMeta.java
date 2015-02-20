@@ -66,14 +66,14 @@ public class WrappedItemMeta implements ItemMeta, Repairable {
 		return new HashMap<String, Object>();
 	}
 
-	private NBTTagCompound getDispalyTag() {
+	protected NBTTagCompound getDispalyTag() {
 		if (!itemmetatag.hasOfType(DISPLAY_TAG, NBTTagType.COMPOUND)) {
 			return new NBTTagCompound();
 		}
 		return (NBTTagCompound) itemmetatag.get(DISPLAY_TAG);
 	}
 
-	private void saveDisplay(NBTTagCompound display) {
+	protected void saveDisplayTag(NBTTagCompound display) {
 		if (display.size() == 0) {
 			itemmetatag.remove(DISPLAY_TAG);
 		} else {
@@ -105,7 +105,7 @@ public class WrappedItemMeta implements ItemMeta, Repairable {
 		} else {
 			display.setString(NAME_TAG, name);
 		}
-		saveDisplay(display);
+		saveDisplayTag(display);
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class WrappedItemMeta implements ItemMeta, Repairable {
 			}
 			display.set(LORE_TAG, list);
 		}
-		saveDisplay(display);
+		saveDisplayTag(display);
 	}
 
 	@Override

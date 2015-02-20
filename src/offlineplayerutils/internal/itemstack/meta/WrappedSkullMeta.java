@@ -60,8 +60,12 @@ public class WrappedSkullMeta extends WrappedItemMeta implements SkullMeta {
 	@Override
 	public boolean setOwner(String owner) {
 		NBTTagCompound profiletag = new NBTTagCompound();
-		profiletag.setString(NAME_TAG, owner);
-		itemmetatag.set(PROFILE_TAG, profiletag);
+		if (owner != null) {
+			profiletag.setString(NAME_TAG, owner);
+			itemmetatag.set(PROFILE_TAG, profiletag);
+		} else {
+			itemmetatag.remove(PROFILE_TAG);
+		}
 		return true;
 	}
 
