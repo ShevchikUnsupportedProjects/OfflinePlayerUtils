@@ -29,9 +29,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class WrappedItemStack extends ItemStack {
 
 	private NBTTagCompound tag;
+	private ItemMeta itemmeta;
 
 	public WrappedItemStack(NBTTagCompound data) {
 		tag = data;
+		itemmeta = MetaSerializer.createMetaFromTag(getType(), (NBTTagCompound) tag.get("tag"));
 	}
 
 	protected NBTTagCompound getTag() {
@@ -50,7 +52,15 @@ public class WrappedItemStack extends ItemStack {
 
 	@Override
 	public ItemMeta getItemMeta() {
-		return MetaSerializer.createMetaFromTag(getType(), (NBTTagCompound) tag.get("tag"));
+		return itemmeta;
+	}
+
+	@Override
+	public boolean setItemMeta(ItemMeta itemmeta) {
+		if (super.setItemMeta(itemmeta)) {
+			this.itemmeta = itemmeta;
+		}
+		return false;
 	}
 
 	@SuppressWarnings("deprecation")

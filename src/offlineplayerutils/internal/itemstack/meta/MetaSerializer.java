@@ -31,8 +31,11 @@ import org.bukkit.inventory.meta.Repairable;
 public class MetaSerializer {
 
 	public static ItemMeta createMetaFromTag(Material type, NBTTagCompound tag) {
+		if (tag == null) {
+			tag = new NBTTagCompound();
+		}
 		ItemMeta bukkit = Bukkit.getItemFactory().getItemMeta(type);
-		WrappedItemMeta wrapped = SpecificMetaSerializer.serializeSpecific(bukkit, tag);
+		WrappedItemMeta wrapped = SpecificMetaSerializer.readSpecificFromNBT(bukkit, tag);
 		if (wrapped.hasDisplayName()) {
 			bukkit.setDisplayName(wrapped.getDisplayName());
 		}
@@ -45,17 +48,17 @@ public class MetaSerializer {
 			}
 		}
 		try {
+			if (wrapped.spigot().isUnbreakable()) {
+				bukkit.spigot().setUnbreakable(true);
+			}
+		} catch (Throwable t) {
+		}
+		try {
 			if (bukkit instanceof Repairable) {
 				Repairable repairablebukkit = (Repairable) bukkit;
 				if (wrapped.hasRepairCost()) {
 					repairablebukkit.setRepairCost(wrapped.getRepairCost());
 				}
-			}
-		} catch (Throwable t) {
-		}
-		try {
-			if (wrapped.spigot().isUnbreakable()) {
-				bukkit.spigot().setUnbreakable(true);
 			}
 		} catch (Throwable t) {
 		}
@@ -69,7 +72,7 @@ public class MetaSerializer {
 	}
 
 	public static NBTTagCompound createTagFromMeta(Material type, ItemMeta bukkit) {
-		WrappedItemMeta wrapped = new WrappedItemMeta(new NBTTagCompound());
+		WrappedItemMeta wrapped = SpecificMetaSerializer.saveSpecificToNBT(bukkit);
 		if (bukkit.hasDisplayName()) {
 			wrapped.setDisplayName(bukkit.getDisplayName());
 		}
@@ -84,6 +87,21 @@ public class MetaSerializer {
 		try {
 			if (bukkit.spigot().isUnbreakable()) {
 				wrapped.spigot().setUnbreakable(true);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof Repairable) {
+				Repairable repairablebukkit = (Repairable) bukkit;
+				if (repairablebukkit.hasRepairCost()) {
+					wrapped.setRepairCost(repairablebukkit.getRepairCost());
+				}
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			for (ItemFlag flag : bukkit.getItemFlags()) {
+				wrapped.addItemFlags(flag);
 			}
 		} catch (Throwable t) {
 		}

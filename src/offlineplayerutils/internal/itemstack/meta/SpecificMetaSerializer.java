@@ -27,11 +27,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class SpecificMetaSerializer {
 
-	protected static WrappedItemMeta serializeSpecific(ItemMeta bukkit, NBTTagCompound tag) {
+	protected static WrappedItemMeta readSpecificFromNBT(ItemMeta bukkit, NBTTagCompound from) {
 		try {
 			if (bukkit instanceof BannerMeta) {
 				BannerMeta bannerbukkit = (BannerMeta) bukkit;
-				WrappedBannerMeta bannerwrapped = new WrappedBannerMeta(tag);
+				WrappedBannerMeta bannerwrapped = new WrappedBannerMeta(from);
 				bannerbukkit.setBaseColor(bannerwrapped.getBaseColor());
 				if (bannerwrapped.numberOfPatterns() != 0) {
 					for (Pattern pattern : bannerwrapped.getPatterns()) {
@@ -45,22 +45,62 @@ public class SpecificMetaSerializer {
 		try {
 			if (bukkit instanceof SkullMeta) {
 				SkullMeta skullbukkit = (SkullMeta) bukkit;
-				WrappedSkullMeta skullwrapped = new WrappedSkullMeta(tag);
+				WrappedSkullMeta skullwrapped = new WrappedSkullMeta(from);
 				if (skullwrapped.hasOwner()) {
 					skullbukkit.setOwner(skullwrapped.getOwner());
 				}
+				return skullwrapped;
 			}
 		} catch (Throwable t) {
 		}
 		try {
 			if (bukkit instanceof LeatherArmorMeta) {
 				LeatherArmorMeta leatherarmorbukkit = (LeatherArmorMeta) bukkit;
-				WrappedLeatherArmorrMeta leatherarmorwrapped = new WrappedLeatherArmorrMeta(tag);
+				WrappedLeatherArmorrMeta leatherarmorwrapped = new WrappedLeatherArmorrMeta(from);
 				leatherarmorbukkit.setColor(leatherarmorwrapped.getColor());
+				return leatherarmorwrapped;
 			}
 		} catch (Throwable t) {
 		}
-		return new WrappedItemMeta(tag);
+		return new WrappedItemMeta(from);
+	}
+
+	protected static WrappedItemMeta saveSpecificToNBT(ItemMeta bukkit) {
+		try {
+			if (bukkit instanceof BannerMeta) {
+				BannerMeta bannerbukkit = (BannerMeta) bukkit;
+				WrappedBannerMeta bannerwrapped = new WrappedBannerMeta(new NBTTagCompound());
+				bannerwrapped.setBaseColor(bannerbukkit.getBaseColor());
+				if (bannerbukkit.numberOfPatterns() != 0) {
+					for (Pattern pattern : bannerbukkit.getPatterns()) {
+						bannerwrapped.addPattern(pattern);
+					}
+				}
+				return bannerwrapped;
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof SkullMeta) {
+				SkullMeta skullbukkit = (SkullMeta) bukkit;
+				WrappedSkullMeta skullwrapped = new WrappedSkullMeta(new NBTTagCompound());
+				if (skullbukkit.hasOwner()) {
+					skullwrapped.setOwner(skullbukkit.getOwner());
+				}
+				return skullwrapped;
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof LeatherArmorMeta) {
+				LeatherArmorMeta leatherarmorbukkit = (LeatherArmorMeta) bukkit;
+				WrappedLeatherArmorrMeta leatherarmorwrapped = new WrappedLeatherArmorrMeta(new NBTTagCompound());
+				leatherarmorwrapped.setColor(leatherarmorbukkit.getColor());
+				return leatherarmorwrapped;
+			}
+		} catch (Throwable t) {
+		}
+		return new WrappedItemMeta(new NBTTagCompound());
 	}
 
 }

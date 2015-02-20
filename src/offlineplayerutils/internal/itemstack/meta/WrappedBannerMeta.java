@@ -140,6 +140,7 @@ public class WrappedBannerMeta extends WrappedItemMeta implements BannerMeta {
 				NBTTagCompound patterntag = new NBTTagCompound();
 				patterntag.setString(PATTERN_PATTERN_TAG, pattern.getPattern().getIdentifier());
 				patterntag.setInt(PATTERN_COLOR_TAG, pattern.getColor().getDyeData());
+				patternstag.add(patterntag);
 			}
 			blockentitytag.set(PATTERNS_TAG, patternstag);
 		}
