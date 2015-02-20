@@ -22,6 +22,7 @@ import offlineplayerutils.simplenbt.NBTTagCompound;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class SpecificMetaSerializer {
 
@@ -37,6 +38,16 @@ public class SpecificMetaSerializer {
 					}
 				}
 				return bannerwrapped;
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof SkullMeta) {
+				SkullMeta skullbukkit = (SkullMeta) bukkit;
+				WrappedSkullMeta skullwrapped = new WrappedSkullMeta(tag);
+				if (skullwrapped.hasOwner()) {
+					skullbukkit.setOwner(skullwrapped.getOwner());
+				}
 			}
 		} catch (Throwable t) {
 		}
