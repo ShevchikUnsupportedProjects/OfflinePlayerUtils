@@ -18,10 +18,12 @@
 package offlineplayerutils.internal.itemstack.meta;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagList;
@@ -29,9 +31,11 @@ import offlineplayerutils.simplenbt.NBTTagString;
 import offlineplayerutils.simplenbt.NBTTagType;
 
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.Repairable;
 
-public class WrappedItemMeta implements ItemMeta {
+public class WrappedItemMeta implements ItemMeta, Repairable {
 
 	private static final String DISPLAY_TAG = "display";
 	private static final String NAME_TAG = "Name";
@@ -39,6 +43,8 @@ public class WrappedItemMeta implements ItemMeta {
 	private static final String ENCHANTMENTS_TAG = "ench";
 	private static final String ENCHANTMENT_ID_TAG = "id";
 	private static final String ENCHANTMENT_LEVEL_TAG = "lvl";
+	private static final String REPAIR_COST_TAG = "RepairCost";
+	private static final String ITEM_FLAGS_TAG = "HideFlags";
 
 	protected NBTTagCompound itemmetatag;
 
@@ -51,7 +57,7 @@ public class WrappedItemMeta implements ItemMeta {
 	}
 
 	@Override
-	public ItemMeta clone() {
+	public WrappedItemMeta clone() {
 		return new WrappedItemMeta((NBTTagCompound) itemmetatag.clone());
 	}
 
@@ -65,6 +71,14 @@ public class WrappedItemMeta implements ItemMeta {
 			return new NBTTagCompound();
 		}
 		return (NBTTagCompound) itemmetatag.get(DISPLAY_TAG);
+	}
+
+	private void saveDisplay(NBTTagCompound display) {
+		if (display.size() == 0) {
+			itemmetatag.remove(DISPLAY_TAG);
+		} else {
+			itemmetatag.set(DISPLAY_TAG, display);
+		}
 	}
 
 	@Override
@@ -129,14 +143,6 @@ public class WrappedItemMeta implements ItemMeta {
 			display.set(LORE_TAG, list);
 		}
 		saveDisplay(display);
-	}
-
-	private void saveDisplay(NBTTagCompound display) {
-		if (display.size() == 0) {
-			itemmetatag.remove(DISPLAY_TAG);
-		} else {
-			itemmetatag.set(DISPLAY_TAG, display);
-		}
 	}
 
 	@Override
@@ -220,6 +226,65 @@ public class WrappedItemMeta implements ItemMeta {
 	@Override
 	public Spigot spigot() {
 		return new SpigotMeta(itemmetatag);
+	}
+
+	@Override
+	public Set<ItemFlag> getItemFlags() {
+		int flagbitset = itemmetatag.getInt(ITEM_FLAGS_TAG);
+		Set<ItemFlag> flags = EnumSet.noneOf(ItemFlag.class);
+		for (ItemFlag flag : ItemFlag.values()) {
+			int modifier = (1 << flag.ordinal());
+			if ((flagbitset & modifier) == modifier) {
+				flags.add(flag);
+			}
+        }
+        return flags;
+	}
+
+	@Override
+	public boolean hasItemFlag(ItemFlag flag) {
+		return getItemFlags().contains(flag);
+	}
+
+	@Override
+	public void addItemFlags(ItemFlag... addflags) {
+		Set<ItemFlag> flags = getItemFlags();
+		for (ItemFlag flag : flags) {
+			flags.add(flag);
+		}
+		saveItemFlags(flags);
+	}
+
+	@Override
+	public void removeItemFlags(ItemFlag... removeflags) {
+		Set<ItemFlag> flags = getItemFlags();
+		for (ItemFlag flag : flags) {
+			flags.remove(flag);
+		}
+		saveItemFlags(flags);
+	}
+
+	private void saveItemFlags(Set<ItemFlag> flags) {
+		int flagbitset = 0;
+		for (ItemFlag flag : flags) {
+			flagbitset |= (1 << flag.ordinal());
+		}
+		itemmetatag.setInt(ITEM_FLAGS_TAG, flagbitset);
+	}
+
+	@Override
+	public boolean hasRepairCost() {
+		return itemmetatag.hasOfNumberType(REPAIR_COST_TAG);
+	}
+
+	@Override
+	public int getRepairCost() {
+		return itemmetatag.getInt(REPAIR_COST_TAG);
+	}
+
+	@Override
+	public void setRepairCost(int cost) {
+		itemmetatag.setInt(REPAIR_COST_TAG, cost);
 	}
 
 }

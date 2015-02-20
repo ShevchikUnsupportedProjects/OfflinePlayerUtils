@@ -24,13 +24,15 @@ import offlineplayerutils.simplenbt.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.Repairable;
 
 public class MetaSerializer {
 
 	public static ItemMeta createMetaFromTag(Material type, NBTTagCompound tag) {
-		ItemMeta wrapped = new WrappedItemMeta(tag);
 		ItemMeta bukkit = Bukkit.getItemFactory().getItemMeta(type);
+		WrappedItemMeta wrapped = SpecificMetaSerializer.serializeSpecific(bukkit, tag);
 		if (wrapped.hasDisplayName()) {
 			bukkit.setDisplayName(wrapped.getDisplayName());
 		}
@@ -43,8 +45,23 @@ public class MetaSerializer {
 			}
 		}
 		try {
+			if (bukkit instanceof Repairable) {
+				Repairable repairablebukkit = (Repairable) bukkit;
+				if (wrapped.hasRepairCost()) {
+					repairablebukkit.setRepairCost(wrapped.getRepairCost());
+				}
+			}
+		} catch (Throwable t) {
+		}
+		try {
 			if (wrapped.spigot().isUnbreakable()) {
 				bukkit.spigot().setUnbreakable(true);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			for (ItemFlag flag : wrapped.getItemFlags()) {
+				bukkit.addItemFlags(flag);
 			}
 		} catch (Throwable t) {
 		}
