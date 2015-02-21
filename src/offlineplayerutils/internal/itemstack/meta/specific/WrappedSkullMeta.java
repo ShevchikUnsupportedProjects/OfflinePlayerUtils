@@ -15,10 +15,12 @@
  *
  */
 
-package offlineplayerutils.internal.itemstack.meta;
+package offlineplayerutils.internal.itemstack.meta.specific;
 
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import offlineplayerutils.internal.itemstack.meta.WrappedItemMeta;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagType;
 
@@ -67,6 +69,30 @@ public class WrappedSkullMeta extends WrappedItemMeta implements SkullMeta {
 			itemmetatag.remove(PROFILE_TAG);
 		}
 		return true;
+	}
+
+
+
+	@Override
+	public void applyToBukkit(ItemMeta bukkit) {
+		super.applyToBukkit(bukkit);
+		if (bukkit instanceof SkullMeta) {
+			SkullMeta skullbukkit = (SkullMeta) bukkit;
+			if (hasOwner()) {
+				skullbukkit.setOwner(getOwner());
+			}
+		}
+	}
+
+	@Override
+	public void copyFromBukkit(ItemMeta bukkit) {
+		super.copyFromBukkit(bukkit);
+		if (bukkit instanceof SkullMeta) {
+			SkullMeta skullbukkit = (SkullMeta) bukkit;
+			if (skullbukkit.hasOwner()) {
+				setOwner(skullbukkit.getOwner());
+			}
+		}
 	}
 
 }

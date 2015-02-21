@@ -19,6 +19,7 @@ package offlineplayerutils.api;
 
 import java.util.HashMap;
 
+import offlineplayerutils.api.inventory.IWrappedItemStack;
 import offlineplayerutils.internal.ExpDataInterface;
 import offlineplayerutils.internal.InventoryDataInterface;
 import offlineplayerutils.internal.LocationDataInterface;
@@ -50,11 +51,11 @@ public class ExtendedOfflinePlayer {
 		return bukkitOfflinePlayer;
 	}
 
-	public ItemStack[] getInventoryContents() {
+	public IWrappedItemStack[] getInventoryContents() {
 		return inventoryData.getInventoryContents(bukkitOfflinePlayer);
 	}
 
-	public ItemStack[] getArmorContents() {
+	public IWrappedItemStack[] getArmorContents() {
 		return inventoryData.getArmorContents(bukkitOfflinePlayer);
 	}
 

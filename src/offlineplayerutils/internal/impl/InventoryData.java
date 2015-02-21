@@ -20,6 +20,7 @@ package offlineplayerutils.internal.impl;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import offlineplayerutils.api.inventory.IWrappedItemStack;
 import offlineplayerutils.internal.InventoryDataInterface;
 import offlineplayerutils.internal.itemstack.ItemStackSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
@@ -32,23 +33,23 @@ import org.bukkit.inventory.ItemStack;
 public class InventoryData implements InventoryDataInterface {
 
 	@Override
-	public ItemStack[] getInventoryContents(OfflinePlayer player) {
+	public IWrappedItemStack[] getInventoryContents(OfflinePlayer player) {
 		NBTTagCompound data = DataUtils.getData(player);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
-		ItemStack[] items = new ItemStack[36];
+		IWrappedItemStack[] items = new IWrappedItemStack[36];
 		for (int i = 0; i < 36; i++) {
-			items[i] = inventory.get(i);
+			items[i] = (IWrappedItemStack) inventory.get(i);
 		}
 		return items;
 	}
 
 	@Override
-	public ItemStack[] getArmorContents(OfflinePlayer player) {
+	public IWrappedItemStack[] getArmorContents(OfflinePlayer player) {
 		NBTTagCompound data = DataUtils.getData(player);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
-		ItemStack[] armor = new ItemStack[4];
+		IWrappedItemStack[] armor = new IWrappedItemStack[4];
 		for (int i = 0; i < 4; i++) {
-			armor[i] = inventory.get(100 + i);
+			armor[i] = (IWrappedItemStack) inventory.get(100 + i);
 		}
 		return armor;
 	}

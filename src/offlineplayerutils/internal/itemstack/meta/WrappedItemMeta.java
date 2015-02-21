@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import offlineplayerutils.api.inventory.IWrappedItemMeta;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagList;
 import offlineplayerutils.simplenbt.NBTTagString;
@@ -35,7 +36,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-public class WrappedItemMeta implements ItemMeta, Repairable {
+public class WrappedItemMeta implements IWrappedItemMeta, Repairable {
 
 	private static final String DISPLAY_TAG = "display";
 	private static final String NAME_TAG = "Name";
@@ -285,6 +286,78 @@ public class WrappedItemMeta implements ItemMeta, Repairable {
 	@Override
 	public void setRepairCost(int cost) {
 		itemmetatag.setInt(REPAIR_COST_TAG, cost);
+	}
+
+
+
+	public void applyToBukkit(ItemMeta bukkit) {
+		if (hasDisplayName()) {
+			bukkit.setDisplayName(getDisplayName());
+		}
+		if (hasLore()) {
+			bukkit.setLore(getLore());
+		}
+		if (hasEnchants()) {
+			for (Entry<Enchantment, Integer> entry : getEnchants().entrySet()) {
+				bukkit.addEnchant(entry.getKey(), entry.getValue(), true);
+			}
+		}
+		try {
+			if (spigot().isUnbreakable()) {
+				bukkit.spigot().setUnbreakable(true);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof Repairable) {
+				Repairable repairablebukkit = (Repairable) bukkit;
+				if (hasRepairCost()) {
+					repairablebukkit.setRepairCost(getRepairCost());
+				}
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			for (ItemFlag flag : getItemFlags()) {
+				bukkit.addItemFlags(flag);
+			}
+		} catch (Throwable t) {
+		}
+	}
+
+	public void copyFromBukkit(ItemMeta bukkit) {
+		if (bukkit.hasDisplayName()) {
+			setDisplayName(bukkit.getDisplayName());
+		}
+		if (bukkit.hasLore()) {
+			setLore(bukkit.getLore());
+		}
+		if (bukkit.hasEnchants()) {
+			for (Entry<Enchantment, Integer> entry : bukkit.getEnchants().entrySet()) {
+				addEnchant(entry.getKey(), entry.getValue(), true);
+			}
+		}
+		try {
+			if (bukkit.spigot().isUnbreakable()) {
+				spigot().setUnbreakable(true);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof Repairable) {
+				Repairable repairablebukkit = (Repairable) bukkit;
+				if (repairablebukkit.hasRepairCost()) {
+					setRepairCost(repairablebukkit.getRepairCost());
+				}
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			for (ItemFlag flag : bukkit.getItemFlags()) {
+				addItemFlags(flag);
+			}
+		} catch (Throwable t) {
+		}
 	}
 
 }

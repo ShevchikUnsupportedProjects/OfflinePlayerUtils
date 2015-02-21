@@ -17,6 +17,7 @@
 
 package offlineplayerutils.internal.itemstack;
 
+import offlineplayerutils.api.inventory.IWrappedItemStack;
 import offlineplayerutils.internal.itemstack.meta.MetaSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
@@ -24,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemStackSerializer {
 
-	public static ItemStack createItemStack(NBTTagCompound compound) {
+	public static IWrappedItemStack createItemStack(NBTTagCompound compound) {
 		return new WrappedItemStack(compound);
 	}
 

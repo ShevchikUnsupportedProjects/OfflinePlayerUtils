@@ -17,7 +17,12 @@
 
 package offlineplayerutils.internal.itemstack;
 
+import java.util.Map;
+
+import offlineplayerutils.api.inventory.IWrappedItemStack;
+import offlineplayerutils.api.inventory.IWrappedItemMeta;
 import offlineplayerutils.internal.itemstack.meta.MetaSerializer;
+import offlineplayerutils.internal.itemstack.meta.WrappedItemMeta;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagType;
 
@@ -26,7 +31,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class WrappedItemStack extends ItemStack {
+public class WrappedItemStack extends IWrappedItemStack {
 
 	private NBTTagCompound tag;
 	private ItemMeta itemmeta;
@@ -114,6 +119,19 @@ public class WrappedItemStack extends ItemStack {
 	@Override
 	public void setDurability(short durability) {
 		tag.setShort("Damage", durability);
+	}
+
+	@Override
+	public IWrappedItemMeta getDirectMeta() {
+		if (hasItemMeta()) {
+			return MetaSerializer.createMeta(itemmeta, (NBTTagCompound) tag.get("tag"));
+		}
+		return new WrappedItemMeta(new NBTTagCompound());
+	}
+
+	@Override
+	public Map<String, Object> getRawData() {
+		return tag.toJava();
 	}
 
 }

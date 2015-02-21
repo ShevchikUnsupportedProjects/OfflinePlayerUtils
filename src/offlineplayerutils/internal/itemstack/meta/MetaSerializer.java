@@ -17,92 +17,61 @@
 
 package offlineplayerutils.internal.itemstack.meta;
 
-import java.util.Map.Entry;
-
+import offlineplayerutils.internal.itemstack.meta.specific.WrappedBannerMeta;
+import offlineplayerutils.internal.itemstack.meta.specific.WrappedLeatherArmorMeta;
+import offlineplayerutils.internal.itemstack.meta.specific.WrappedMapMeta;
+import offlineplayerutils.internal.itemstack.meta.specific.WrappedSkullMeta;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.Repairable;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.MapMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class MetaSerializer {
 
 	public static ItemMeta createMetaFromTag(Material type, NBTTagCompound tag) {
 		ItemMeta bukkit = Bukkit.getItemFactory().getItemMeta(type);
-		WrappedItemMeta wrapped = SpecificMetaSerializer.readSpecificFromNBT(bukkit, tag);
-		if (wrapped.hasDisplayName()) {
-			bukkit.setDisplayName(wrapped.getDisplayName());
-		}
-		if (wrapped.hasLore()) {
-			bukkit.setLore(wrapped.getLore());
-		}
-		if (wrapped.hasEnchants()) {
-			for (Entry<Enchantment, Integer> entry : wrapped.getEnchants().entrySet()) {
-				bukkit.addEnchant(entry.getKey(), entry.getValue(), true);
-			}
-		}
-		try {
-			if (wrapped.spigot().isUnbreakable()) {
-				bukkit.spigot().setUnbreakable(true);
-			}
-		} catch (Throwable t) {
-		}
-		try {
-			if (bukkit instanceof Repairable) {
-				Repairable repairablebukkit = (Repairable) bukkit;
-				if (wrapped.hasRepairCost()) {
-					repairablebukkit.setRepairCost(wrapped.getRepairCost());
-				}
-			}
-		} catch (Throwable t) {
-		}
-		try {
-			for (ItemFlag flag : wrapped.getItemFlags()) {
-				bukkit.addItemFlags(flag);
-			}
-		} catch (Throwable t) {
-		}
+		WrappedItemMeta wrapped = createMeta(bukkit, tag);
+		wrapped.applyToBukkit(bukkit);
 		return bukkit;
 	}
 
 	public static NBTTagCompound createTagFromMeta(Material type, ItemMeta bukkit) {
-		WrappedItemMeta wrapped = SpecificMetaSerializer.saveSpecificToNBT(bukkit);
-		if (bukkit.hasDisplayName()) {
-			wrapped.setDisplayName(bukkit.getDisplayName());
-		}
-		if (bukkit.hasLore()) {
-			wrapped.setLore(bukkit.getLore());
-		}
-		if (bukkit.hasEnchants()) {
-			for (Entry<Enchantment, Integer> entry : bukkit.getEnchants().entrySet()) {
-				wrapped.addEnchant(entry.getKey(), entry.getValue(), true);
-			}
-		}
-		try {
-			if (bukkit.spigot().isUnbreakable()) {
-				wrapped.spigot().setUnbreakable(true);
-			}
-		} catch (Throwable t) {
-		}
-		try {
-			if (bukkit instanceof Repairable) {
-				Repairable repairablebukkit = (Repairable) bukkit;
-				if (repairablebukkit.hasRepairCost()) {
-					wrapped.setRepairCost(repairablebukkit.getRepairCost());
-				}
-			}
-		} catch (Throwable t) {
-		}
-		try {
-			for (ItemFlag flag : bukkit.getItemFlags()) {
-				wrapped.addItemFlags(flag);
-			}
-		} catch (Throwable t) {
-		}
+		WrappedItemMeta wrapped = createMeta(bukkit, new NBTTagCompound());
+		wrapped.copyFromBukkit(bukkit);
 		return wrapped.getTag();
+	}
+
+	public static WrappedItemMeta createMeta(ItemMeta bukkit, NBTTagCompound tag) {
+		try {
+			if (bukkit instanceof BannerMeta) {
+				return new WrappedBannerMeta(tag);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof SkullMeta) {
+				return new WrappedSkullMeta(tag);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof LeatherArmorMeta) {
+				return new WrappedLeatherArmorMeta(tag);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof MapMeta) {
+				return new WrappedMapMeta(tag);
+			}
+		} catch (Throwable t) {
+		}
+		return new WrappedItemMeta(tag);
 	}
 
 }

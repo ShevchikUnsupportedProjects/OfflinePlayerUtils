@@ -15,11 +15,12 @@
  *
  */
 
-package offlineplayerutils.internal.itemstack.meta;
+package offlineplayerutils.internal.itemstack.meta.specific;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import offlineplayerutils.internal.itemstack.meta.WrappedItemMeta;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagList;
 import offlineplayerutils.simplenbt.NBTTagType;
@@ -28,6 +29,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class WrappedBannerMeta extends WrappedItemMeta implements BannerMeta {
 
@@ -145,6 +147,36 @@ public class WrappedBannerMeta extends WrappedItemMeta implements BannerMeta {
 			blockentitytag.set(PATTERNS_TAG, patternstag);
 		}
 		saveBlockEntityTag(blockentitytag);
+	}
+
+
+
+	@Override
+	public void applyToBukkit(ItemMeta bukkit) {
+		super.applyToBukkit(bukkit);
+		if (bukkit instanceof BannerMeta) {
+			BannerMeta bannerbukkit = (BannerMeta) bukkit;
+			bannerbukkit.setBaseColor(getBaseColor());
+			if (numberOfPatterns() != 0) {
+				for (Pattern pattern : getPatterns()) {
+					bannerbukkit.addPattern(pattern);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void copyFromBukkit(ItemMeta bukkit) {
+		super.copyFromBukkit(bukkit);
+		if (bukkit instanceof BannerMeta) {
+			BannerMeta bannerbukkit = (BannerMeta) bukkit;
+			setBaseColor(bannerbukkit.getBaseColor());
+			if (bannerbukkit.numberOfPatterns() != 0) {
+				for (Pattern pattern : bannerbukkit.getPatterns()) {
+					addPattern(pattern);
+				}
+			}
+		}
 	}
 
 }

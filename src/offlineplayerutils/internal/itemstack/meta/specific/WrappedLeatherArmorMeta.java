@@ -15,25 +15,27 @@
  *
  */
 
-package offlineplayerutils.internal.itemstack.meta;
+package offlineplayerutils.internal.itemstack.meta.specific;
 
+import offlineplayerutils.internal.itemstack.meta.WrappedItemMeta;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-public class WrappedLeatherArmorrMeta extends WrappedItemMeta implements LeatherArmorMeta {
+public class WrappedLeatherArmorMeta extends WrappedItemMeta implements LeatherArmorMeta {
 
 	private static final String COLOR_TAG = "color";
 
-	public WrappedLeatherArmorrMeta(NBTTagCompound itemmetatag) {
+	public WrappedLeatherArmorMeta(NBTTagCompound itemmetatag) {
 		super(itemmetatag);
 	}
 
 	@Override
-	public WrappedLeatherArmorrMeta clone() {
-		return new WrappedLeatherArmorrMeta(itemmetatag);
+	public WrappedLeatherArmorMeta clone() {
+		return new WrappedLeatherArmorMeta(itemmetatag);
 	}
 
 	@Override
@@ -54,6 +56,26 @@ public class WrappedLeatherArmorrMeta extends WrappedItemMeta implements Leather
 			display.setInt(COLOR_TAG, color.asRGB());
 		}
 		saveDisplayTag(display);
+	}
+
+
+
+	@Override
+	public void applyToBukkit(ItemMeta bukkit) {
+		super.applyToBukkit(bukkit);
+		if (bukkit instanceof LeatherArmorMeta) {
+			LeatherArmorMeta leatherarmorbukkit = (LeatherArmorMeta) bukkit;
+			leatherarmorbukkit.setColor(getColor());
+		}
+	}
+
+	@Override
+	public void copyFromBukkit(ItemMeta bukkit) {
+		super.copyFromBukkit(bukkit);
+		if (bukkit instanceof LeatherArmorMeta) {
+			LeatherArmorMeta leatherarmorbukkit = (LeatherArmorMeta) bukkit;
+			setColor(leatherarmorbukkit.getColor());
+		}
 	}
 
 }
