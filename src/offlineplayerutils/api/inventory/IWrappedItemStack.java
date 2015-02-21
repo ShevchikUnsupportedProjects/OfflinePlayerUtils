@@ -25,6 +25,8 @@ public abstract class IWrappedItemStack extends ItemStack {
 
 	public abstract IWrappedItemMeta getDirectMeta();
 
-	public abstract Map<String, Object> getRawData();
+	public abstract Map<String, Object> getRawNBTData();
+
+	public abstract void setRawNBTData(Map<String, Object> rawdata);
 
 }

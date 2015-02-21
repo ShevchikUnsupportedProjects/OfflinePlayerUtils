@@ -23,6 +23,7 @@ import offlineplayerutils.api.inventory.IWrappedItemStack;
 import offlineplayerutils.api.inventory.IWrappedItemMeta;
 import offlineplayerutils.internal.itemstack.meta.MetaSerializer;
 import offlineplayerutils.internal.itemstack.meta.WrappedItemMeta;
+import offlineplayerutils.simplenbt.NBTSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagType;
 
@@ -130,8 +131,13 @@ public class WrappedItemStack extends IWrappedItemStack {
 	}
 
 	@Override
-	public Map<String, Object> getRawData() {
+	public Map<String, Object> getRawNBTData() {
 		return tag.toJava();
+	}
+
+	@Override
+	public void setRawNBTData(Map<String, Object> rawdata) {
+		tag = NBTSerializer.fromJava(rawdata);
 	}
 
 }

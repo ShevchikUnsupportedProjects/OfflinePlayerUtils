@@ -23,6 +23,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -48,6 +51,47 @@ public class NBTSerializer {
 		} catch (Throwable t) {
 			NBTSerializer.<Error>sneakyThrow(t);
 		}
+	}
+
+	public static NBTTagCompound fromJava(Map<String, Object> map) {
+		NBTTagCompound compound = new NBTTagCompound();
+		for (Entry<String, Object> entry : map.entrySet()) {
+			compound.set(entry.getKey(), decodeObject(entry.getValue()));
+		}
+		return compound;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static NBTTagBase<?> decodeObject(Object obj) {
+		if (obj instanceof Number) {
+			return new NBTTagNumber<Number>((NBTTagType) obj);
+		}
+		if (obj instanceof String) {
+			return new NBTTagString((String) obj);
+		}
+		if (obj instanceof byte[]) {
+			return new NBTTagByteArray((byte[]) obj);
+		}
+		if (obj instanceof int[]) {
+			return new NBTTagIntArray((int[]) obj);
+		}
+		if (obj instanceof List) {
+			NBTTagList<NBTTagBase<?>> list = new NBTTagList<NBTTagBase<?>>();
+			for (Object element : (List<Object>) obj) {
+				list.add(decodeObject(element));
+			}
+			return list;
+		}
+		if (obj instanceof Map) {
+			NBTTagCompound compound = new NBTTagCompound();
+			for (Entry<Object, Object> entry : ((Map<Object, Object>) obj).entrySet()) {
+				if (!(entry.getKey() instanceof String)) {
+					throw new IllegalArgumentException("Map key should be String");
+				}
+				compound.set((String) entry.getKey(), decodeObject(entry.getValue()));
+			}
+		}
+		throw new IllegalArgumentException("Can't convert "+obj+" to NBT, object is not of any possible types");
 	}
 
 	@SuppressWarnings("unchecked")

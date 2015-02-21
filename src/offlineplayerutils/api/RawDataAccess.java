@@ -18,14 +18,20 @@
 package offlineplayerutils.api;
 
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import offlineplayerutils.simplenbt.NBTSerializer;
 
 public class RawDataAccess {
 
-	public static Map<String, Object> getRawDataFrom(InputStream inputsteam) {
+	public static Map<String, Object> getRawNBTDataFrom(InputStream inputsteam) {
 		return NBTSerializer.read(inputsteam).toJava();
+	}
+
+	public static void writeRawNBTDataTo(HashMap<String, Object> rawdata, OutputStream stream) {
+		NBTSerializer.write(NBTSerializer.fromJava(rawdata), stream);
 	}
 
 }

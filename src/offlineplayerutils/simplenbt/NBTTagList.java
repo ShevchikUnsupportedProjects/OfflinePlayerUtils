@@ -95,10 +95,16 @@ public class NBTTagList<T extends NBTTagBase<?>> extends NBTTagBase<ArrayList<T>
 	}
 
 	public void set(int index, T value) {
+		if (getElementsType() != NBTTagType.END && getElementsType() != value.getType()) {
+			throw new IllegalArgumentException("Value should be type of "+value.getType());
+		}
 		list.set(index, value);
 	}
 
 	public void add(T value) {
+		if (getElementsType() != NBTTagType.END && getElementsType() != value.getType()) {
+			throw new IllegalArgumentException("Value should be type of "+value.getType());
+		}
 		list.add(value);
 	}
 

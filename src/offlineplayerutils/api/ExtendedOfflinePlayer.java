@@ -26,6 +26,7 @@ import offlineplayerutils.internal.impl.ExpData;
 import offlineplayerutils.internal.impl.InventoryData;
 import offlineplayerutils.internal.impl.LocationData;
 import offlineplayerutils.internal.impl.StatusData;
+import offlineplayerutils.simplenbt.NBTSerializer;
 
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
@@ -124,6 +125,10 @@ public class ExtendedOfflinePlayer {
 
 	public HashMap<String, Object> getRawNBTData() {
 		return DataUtils.getData(datafile).toJava();
+	}
+
+	public void setRawNBTData(HashMap<String, Object> rawdata) {
+		DataUtils.saveData(datafile, NBTSerializer.fromJava(rawdata));
 	}
 
 	@Override
