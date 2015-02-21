@@ -15,18 +15,16 @@
  *
  */
 
-package offlineplayerutils.internal;
+package offlineplayerutils.api.inventory;
 
-import org.bukkit.OfflinePlayer;
+import java.util.Map;
 
-public interface ExpDataInterface {
+import org.bukkit.inventory.ItemStack;
 
-	public float getExp(OfflinePlayer player);
+public abstract class IWrappedItemStack extends ItemStack {
 
-	public void setExp(OfflinePlayer player, float exp);
+	public abstract IWrappedItemMeta getDirectMeta();
 
-	public int getLevel(OfflinePlayer player);
-
-	public void setLevel(OfflinePlayer player, int level);
+	public abstract Map<String, Object> getRawData();
 
 }

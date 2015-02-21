@@ -15,27 +15,17 @@
  *
  */
 
-package offlineplayerutils.internal;
+package offlineplayerutils.api;
 
-import org.bukkit.GameMode;
-import org.bukkit.OfflinePlayer;
+import java.io.InputStream;
+import java.util.Map;
 
-public interface StatusDataInterface {
+import offlineplayerutils.simplenbt.NBTSerializer;
 
-	public int getFoodLevel(OfflinePlayer player);
+public class RawDataAccess {
 
-	public void setFoodLevel(OfflinePlayer player, int foodlevel);
-
-	public float getHealth(OfflinePlayer player);
-
-	public void setHealth(OfflinePlayer player, float health);
-
-	public float getMaxHealth(OfflinePlayer player);
-
-	public void setMaxHeath(OfflinePlayer player, float maxhealth);
-
-	public GameMode getGameMode(OfflinePlayer player);
-
-	public void setGameMode(OfflinePlayer player, GameMode mode);
+	public static Map<String, Object> getRawDataFrom(InputStream inputsteam) {
+		return NBTSerializer.read(inputsteam).toJava();
+	}
 
 }

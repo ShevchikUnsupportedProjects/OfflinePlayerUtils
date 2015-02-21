@@ -17,69 +17,62 @@
 
 package offlineplayerutils.internal.impl;
 
-import offlineplayerutils.internal.StatusDataInterface;
+import java.io.File;
+
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 
-public class StatusData implements StatusDataInterface {
+public class StatusData {
 
-	@Override
-	public int getFoodLevel(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public int getFoodLevel(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		return data.getInt("foodLevel");
 	}
 
-	@Override
-	public void setFoodLevel(OfflinePlayer player, int foodlevel) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public void setFoodLevel(File datafile, int foodlevel) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		data.setInt("foodLevel", foodlevel);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
-	@Override
-	public float getHealth(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public float getHealth(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		if (data.hasOfNumberType("HealF")) {
 			return data.getFloat("HealF");
 		}
-		return data.getNumber("Health", getMaxHealth(player)).floatValue();
+		return data.getNumber("Health", getMaxHealth(datafile)).floatValue();
 	}
 
-	@Override
-	public void setHealth(OfflinePlayer player, float health) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public void setHealth(File datafile, float health) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		data.setFloat("HealF", health);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
-	@Override
-	public float getMaxHealth(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public float getMaxHealth(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		return data.getNumber("Bukkit.MaxHealth", 20F).floatValue();
 	}
 
-	@Override
-	public void setMaxHeath(OfflinePlayer player, float maxhealth) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public void setMaxHeath(File datafile, float maxhealth) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		data.setFloat("Bukkit.MaxHealth", maxhealth);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
 	@SuppressWarnings("deprecation")
-	@Override
-	public GameMode getGameMode(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public GameMode getGameMode(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		return GameMode.getByValue(data.getInt("playerGameType"));
 	}
 
 	@SuppressWarnings("deprecation")
-	@Override
-	public void setGameMode(OfflinePlayer player, GameMode mode) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public void setGameMode(File datafile, GameMode mode) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		data.setInt("playerGameType", mode.getValue());
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
 }

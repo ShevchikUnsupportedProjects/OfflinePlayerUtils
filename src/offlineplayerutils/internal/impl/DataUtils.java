@@ -25,25 +25,21 @@ import java.io.FileOutputStream;
 import offlineplayerutils.simplenbt.NBTSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-
 public class DataUtils {
 
-	public static NBTTagCompound getData(OfflinePlayer player) {
-		File file = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + player.getUniqueId() + ".dat");
-		if (file.exists()) {
+	public static NBTTagCompound getData(File datafile) {
+		if (datafile.exists()) {
 			try {
-				return NBTSerializer.read(new FileInputStream(file));
+				return NBTSerializer.read(new FileInputStream(datafile));
 			} catch (FileNotFoundException e) {
 			}
 		}
 		return null;
 	}
 
-	public static void saveData(OfflinePlayer player, NBTTagCompound data) {
-		File file1 = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + player.getUniqueId() + ".dat.tmp");
-		File file2 = new File(Bukkit.getWorlds().get(0).getWorldFolder().getAbsolutePath() + File.separator + "playerdata" + File.separator + player.getUniqueId() + ".dat");
+	public static void saveData(File datafile, NBTTagCompound data) {
+		File file1 = new File(datafile.getAbsolutePath()+".tmp");
+		File file2 = new File(datafile.getAbsolutePath());
 		try {
 			NBTSerializer.write(data, new FileOutputStream(file1));
 		} catch (FileNotFoundException e) {

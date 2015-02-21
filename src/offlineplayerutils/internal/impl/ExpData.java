@@ -17,37 +17,32 @@
 
 package offlineplayerutils.internal.impl;
 
-import offlineplayerutils.internal.ExpDataInterface;
+import java.io.File;
+
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
-import org.bukkit.OfflinePlayer;
+public class ExpData {
 
-public class ExpData implements ExpDataInterface {
-
-	@Override
-	public float getExp(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public float getExp(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		return data.getFloat("XpP");
 	}
 
-	@Override
-	public void setExp(OfflinePlayer player, float exp) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public void setExp(File datafile, float exp) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		data.setFloat("XpP", exp);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
-	@Override
-	public int getLevel(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public int getLevel(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		return data.getInt("XpLevel");
 	}
 
-	@Override
-	public void setLevel(OfflinePlayer player, int level) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public void setLevel(File datafile, int level) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		data.setInt("XpLevel", level);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
 }

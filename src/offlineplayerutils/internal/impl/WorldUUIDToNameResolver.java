@@ -24,15 +24,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
-import offlineplayerutils.internal.WorldUUIDToNameResolverInterface;
 import offlineplayerutils.simplenbt.NBTSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
 import org.bukkit.Bukkit;
 
-public class WorldUUIDToNameResolver implements WorldUUIDToNameResolverInterface {
+public class WorldUUIDToNameResolver {
 
-	@Override
 	public String resolveWorldName(UUID uuid) {
 		if (Bukkit.getWorld(uuid) != null) {
 			return Bukkit.getWorld(uuid).getName();

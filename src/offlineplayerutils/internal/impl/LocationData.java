@@ -17,22 +17,19 @@
 
 package offlineplayerutils.internal.impl;
 
+import java.io.File;
 import java.util.UUID;
 
 import offlineplayerutils.api.LocationInfo;
-import offlineplayerutils.internal.LocationDataInterface;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagList;
 import offlineplayerutils.simplenbt.NBTTagNumber;
 
-import org.bukkit.OfflinePlayer;
-
-public class LocationData implements LocationDataInterface {
+public class LocationData {
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public LocationInfo getLocation(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public LocationInfo getLocation(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		UUID world = new UUID(data.getLong("WorldUUIDMost"), data.getLong("WorldUUIDLeast"));
 		if (data.hasListOfNumberType("Pos")) {
 			NBTTagList<NBTTagNumber<Number>> nbttaglist = (NBTTagList<NBTTagNumber<Number>>) data.get("Pos");
@@ -46,9 +43,8 @@ public class LocationData implements LocationDataInterface {
 		return null;
 	}
 
-	@Override
-	public void setLocation(OfflinePlayer player, LocationInfo location) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public void setLocation(File datafile, LocationInfo location) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		data.setLong("WorldUUIDMost", location.getWorldUUID().getMostSignificantBits());
 		data.setLong("WorldUUIDLeast", location.getWorldUUID().getLeastSignificantBits());
 		NBTTagList<NBTTagNumber<Double>> nbttaglist = new NBTTagList<NBTTagNumber<Double>>();
@@ -56,7 +52,7 @@ public class LocationData implements LocationDataInterface {
 		nbttaglist.add(new NBTTagNumber<Double>(location.getY()));
 		nbttaglist.add(new NBTTagNumber<Double>(location.getZ()));
 		data.set("Pos", nbttaglist);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
 }

@@ -15,21 +15,9 @@
  *
  */
 
-package offlineplayerutils.internal;
+package offlineplayerutils.api.inventory;
 
-import offlineplayerutils.api.inventory.IWrappedItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import org.bukkit.OfflinePlayer;
-import org.bukkit.inventory.ItemStack;
-
-public interface InventoryDataInterface {
-
-	public IWrappedItemStack[] getInventoryContents(OfflinePlayer player);
-
-	public IWrappedItemStack[] getArmorContents(OfflinePlayer player);
-
-	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents);
-
-	public void setArmorContents(OfflinePlayer player, ItemStack[] contents);
-
+public interface IWrappedItemMeta extends ItemMeta {
 }

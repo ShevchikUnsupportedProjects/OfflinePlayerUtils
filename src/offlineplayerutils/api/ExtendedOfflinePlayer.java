@@ -17,13 +17,10 @@
 
 package offlineplayerutils.api;
 
+import java.io.File;
 import java.util.HashMap;
 
 import offlineplayerutils.api.inventory.IWrappedItemStack;
-import offlineplayerutils.internal.ExpDataInterface;
-import offlineplayerutils.internal.InventoryDataInterface;
-import offlineplayerutils.internal.LocationDataInterface;
-import offlineplayerutils.internal.StatusDataInterface;
 import offlineplayerutils.internal.impl.DataUtils;
 import offlineplayerutils.internal.impl.ExpData;
 import offlineplayerutils.internal.impl.InventoryData;
@@ -36,15 +33,17 @@ import org.bukkit.inventory.ItemStack;
 
 public class ExtendedOfflinePlayer {
 
-	private static final InventoryDataInterface inventoryData = new InventoryData();
-	private static final LocationDataInterface locationData = new LocationData();
-	private static final StatusDataInterface statusData = new StatusData();
-	private static final ExpDataInterface expData = new ExpData();
+	private static final InventoryData inventoryData = new InventoryData();
+	private static final LocationData locationData = new LocationData();
+	private static final StatusData statusData = new StatusData();
+	private static final ExpData expData = new ExpData();
 
 	private OfflinePlayer bukkitOfflinePlayer;
+	private File datafile;
 
-	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer) {
+	protected ExtendedOfflinePlayer(OfflinePlayer bukkitOfflinePlayer, File playerfile) {
 		this.bukkitOfflinePlayer = bukkitOfflinePlayer;
+		this.datafile = playerfile;
 	}
 
 	public OfflinePlayer getBukkitOfflinePlayer() {
@@ -52,79 +51,79 @@ public class ExtendedOfflinePlayer {
 	}
 
 	public IWrappedItemStack[] getInventoryContents() {
-		return inventoryData.getInventoryContents(bukkitOfflinePlayer);
+		return inventoryData.getInventoryContents(datafile);
 	}
 
 	public IWrappedItemStack[] getArmorContents() {
-		return inventoryData.getArmorContents(bukkitOfflinePlayer);
+		return inventoryData.getArmorContents(datafile);
 	}
 
 	public void setInventoryContents(ItemStack[] contents) {
-		inventoryData.setInventoryContents(bukkitOfflinePlayer, contents);
+		inventoryData.setInventoryContents(datafile, contents);
 	}
 
 	public void setArmorContents(ItemStack[] contents) {
-		inventoryData.setArmorContents(bukkitOfflinePlayer, contents);
+		inventoryData.setArmorContents(datafile, contents);
 	}
 
 	public LocationInfo getLocation() {
-		return locationData.getLocation(bukkitOfflinePlayer);
+		return locationData.getLocation(datafile);
 	}
 
 	public void setLocation(LocationInfo location) {
-		locationData.setLocation(bukkitOfflinePlayer, location);
+		locationData.setLocation(datafile, location);
 	}
 
 	public int getFoodLevel() {
-		return statusData.getFoodLevel(bukkitOfflinePlayer);
+		return statusData.getFoodLevel(datafile);
 	}
 
 	public void setFoodLevel(int foodlevel) {
-		statusData.setFoodLevel(bukkitOfflinePlayer, foodlevel);
+		statusData.setFoodLevel(datafile, foodlevel);
 	}
 
 	public float getHealth() {
-		return statusData.getHealth(bukkitOfflinePlayer);
+		return statusData.getHealth(datafile);
 	}
 
 	public void setHealth(float health) {
-		statusData.setHealth(bukkitOfflinePlayer, health);
+		statusData.setHealth(datafile, health);
 	}
 
 	public float getMaxHealth() {
-		return statusData.getMaxHealth(bukkitOfflinePlayer);
+		return statusData.getMaxHealth(datafile);
 	}
 
 	public void setMaxHealth(float maxhealth) {
-		statusData.setMaxHeath(bukkitOfflinePlayer, maxhealth);
+		statusData.setMaxHeath(datafile, maxhealth);
 	}
 
 	public GameMode getGameMode() {
-		return statusData.getGameMode(bukkitOfflinePlayer);
+		return statusData.getGameMode(datafile);
 	}
 
 	public void setGameMode(GameMode gamemode) {
-		statusData.setGameMode(bukkitOfflinePlayer, gamemode);
+		statusData.setGameMode(datafile, gamemode);
 	}
 
 	public float getExp() {
-		return expData.getExp(bukkitOfflinePlayer);
+		return expData.getExp(datafile);
 	}
 
 	public void setExp(float exp) {
-		expData.setExp(bukkitOfflinePlayer, exp);
+		expData.setExp(datafile, exp);
 	}
 
 	public int getLevel() {
-		return expData.getLevel(bukkitOfflinePlayer);
+		return expData.getLevel(datafile);
 	}
 
 	public void setLevel(int level) {
-		expData.setLevel(bukkitOfflinePlayer, level);
+		expData.setLevel(datafile, level);
 	}
 
 	public HashMap<String, Object> getRawNBTData() {
-		return DataUtils.getData(bukkitOfflinePlayer).toJava();
+		return DataUtils.getData(datafile).toJava();
 	}
 
 	@Override

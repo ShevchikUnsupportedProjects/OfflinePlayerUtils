@@ -17,24 +17,22 @@
 
 package offlineplayerutils.internal.impl;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import offlineplayerutils.api.inventory.IWrappedItemStack;
-import offlineplayerutils.internal.InventoryDataInterface;
 import offlineplayerutils.internal.itemstack.ItemStackSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagList;
 import offlineplayerutils.simplenbt.NBTTagType;
 
-import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 
-public class InventoryData implements InventoryDataInterface {
+public class InventoryData {
 
-	@Override
-	public IWrappedItemStack[] getInventoryContents(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public IWrappedItemStack[] getInventoryContents(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
 		IWrappedItemStack[] items = new IWrappedItemStack[36];
 		for (int i = 0; i < 36; i++) {
@@ -43,9 +41,8 @@ public class InventoryData implements InventoryDataInterface {
 		return items;
 	}
 
-	@Override
-	public IWrappedItemStack[] getArmorContents(OfflinePlayer player) {
-		NBTTagCompound data = DataUtils.getData(player);
+	public IWrappedItemStack[] getArmorContents(File datafile) {
+		NBTTagCompound data = DataUtils.getData(datafile);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
 		IWrappedItemStack[] armor = new IWrappedItemStack[4];
 		for (int i = 0; i < 4; i++) {
@@ -54,33 +51,32 @@ public class InventoryData implements InventoryDataInterface {
 		return armor;
 	}
 
-	@Override
-	public void setInventoryContents(OfflinePlayer player, ItemStack[] contents) {
+	public void setInventoryContents(File datafile, ItemStack[] contents) {
 		if (contents.length != 36) {
 			throw new IllegalArgumentException("Inventory contents array should have a length of 36");
 		}
-		NBTTagCompound data = DataUtils.getData(player);
+		NBTTagCompound data = DataUtils.getData(datafile);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
 		for (int i = 0; i < 36; i++) {
 			inventory.put(i, contents[i]);
 		}
 		setItems(data, inventory);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
 
-	@Override
-	public void setArmorContents(OfflinePlayer player, ItemStack[] contents) {
+	public void setArmorContents(File datafile, ItemStack[] contents) {
 		if (contents.length != 4) {
 			throw new IllegalArgumentException("Armor contents array should have a length of 4");
 		}
-		NBTTagCompound data = DataUtils.getData(player);
+		NBTTagCompound data = DataUtils.getData(datafile);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
 		for (int i = 0; i < 4; i++) {
 			inventory.put(100 + i, contents[i]);
 		}
 		setItems(data, inventory);
-		DataUtils.saveData(player, data);
+		DataUtils.saveData(datafile, data);
 	}
+
 
 	@SuppressWarnings("unchecked")
 	private HashMap<Integer, ItemStack> getItems(NBTTagCompound data) {
