@@ -42,7 +42,7 @@ public class WrappedEnchantmentStorageMeta extends WrappedItemMeta implements En
 
 	@Override
 	public WrappedEnchantmentStorageMeta clone() {
-		return new WrappedEnchantmentStorageMeta(itemmetatag);
+		return new WrappedEnchantmentStorageMeta((NBTTagCompound) itemmetatag.clone());
 	}
 
 	@Override

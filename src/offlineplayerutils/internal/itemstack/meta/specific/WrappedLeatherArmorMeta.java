@@ -35,7 +35,7 @@ public class WrappedLeatherArmorMeta extends WrappedItemMeta implements LeatherA
 
 	@Override
 	public WrappedLeatherArmorMeta clone() {
-		return new WrappedLeatherArmorMeta(itemmetatag);
+		return new WrappedLeatherArmorMeta((NBTTagCompound) itemmetatag.clone());
 	}
 
 	@Override

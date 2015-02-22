@@ -33,7 +33,7 @@ public class WrappedMapMeta extends WrappedItemMeta implements MapMeta {
 
 	@Override
 	public WrappedMapMeta clone() {
-		return new WrappedMapMeta(itemmetatag);
+		return new WrappedMapMeta((NBTTagCompound) itemmetatag.clone());
 	}
 
 	@Override
