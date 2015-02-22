@@ -18,6 +18,7 @@
 package offlineplayerutils.internal.itemstack.meta;
 
 import offlineplayerutils.internal.itemstack.meta.specific.WrappedBannerMeta;
+import offlineplayerutils.internal.itemstack.meta.specific.WrappedEnchantmentStorageMeta;
 import offlineplayerutils.internal.itemstack.meta.specific.WrappedLeatherArmorMeta;
 import offlineplayerutils.internal.itemstack.meta.specific.WrappedMapMeta;
 import offlineplayerutils.internal.itemstack.meta.specific.WrappedSkullMeta;
@@ -26,6 +27,7 @@ import offlineplayerutils.simplenbt.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.MapMeta;
@@ -68,6 +70,12 @@ public class MetaSerializer {
 		try {
 			if (bukkit instanceof MapMeta) {
 				return new WrappedMapMeta(tag);
+			}
+		} catch (Throwable t) {
+		}
+		try {
+			if (bukkit instanceof EnchantmentStorageMeta) {
+				return new WrappedEnchantmentStorageMeta(tag);
 			}
 		} catch (Throwable t) {
 		}

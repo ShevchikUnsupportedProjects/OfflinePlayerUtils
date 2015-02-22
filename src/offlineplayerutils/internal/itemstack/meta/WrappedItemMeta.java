@@ -176,7 +176,11 @@ public class WrappedItemMeta implements IWrappedItemMeta, Repairable {
 
 	@Override
 	public int getEnchantLevel(Enchantment ench) {
-		return getEnchants().get(ench);
+		Integer level = getEnchants().get(ench);
+		if (level == null) {
+			return 0;
+		}
+		return level;
 	}
 
 	@Override
