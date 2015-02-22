@@ -7,10 +7,12 @@
 	<target name="build">
         <mkdir dir="build/classes" />
         <javac source="1.7" target="1.7" encoding="UTF-8" srcdir="src" destdir="build/classes" classpathref="libs" debug="on" />
-		<copy todir="build/classes">
+        <copy todir="build/classes">
      		<fileset file="src/plugin.yml" />
-		</copy>
-        <jar destfile="target/OfflinePlayerUtils.jar" basedir="build/classes" />
+     		<fileset file="src/LICENSE" />
+            <fileset dir="src" />
+        </copy>
+        <jar destfile="target/OfflinePlayerUtils.jar" basedir="build/classes" compress="true" />
 		<delete dir="build" />
     </target>
 	

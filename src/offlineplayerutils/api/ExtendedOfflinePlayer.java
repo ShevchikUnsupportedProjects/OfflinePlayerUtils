@@ -47,86 +47,155 @@ public class ExtendedOfflinePlayer {
 		this.datafile = playerfile;
 	}
 
+	/**
+	 * Get OfflinePlayer
+	 * @return OfflinePlayer instance used for creation of this object
+	 */
 	public OfflinePlayer getBukkitOfflinePlayer() {
 		return bukkitOfflinePlayer;
 	}
 
+	/**
+	 * Get player inventory contents
+	 */
 	public IWrappedItemStack[] getInventoryContents() {
 		return inventoryData.getInventoryContents(datafile);
 	}
 
+	/**
+	 * Get player armor contents
+	 */
 	public IWrappedItemStack[] getArmorContents() {
 		return inventoryData.getArmorContents(datafile);
 	}
 
+	/**
+	 * Set player inventory contents
+	 * @param contents array of itemstacks, should have a length of 36
+	 */
 	public void setInventoryContents(ItemStack[] contents) {
 		inventoryData.setInventoryContents(datafile, contents);
 	}
 
+	/**
+	 * Set player armor contents
+	 * @param contents array of itemstacks, should have a length of 4, order is: helmet, chestplate, leggins, boots
+	 */
 	public void setArmorContents(ItemStack[] contents) {
 		inventoryData.setArmorContents(datafile, contents);
 	}
 
+	/**
+	 * Get player location info
+	 */
 	public LocationInfo getLocation() {
 		return locationData.getLocation(datafile);
 	}
 
+	/**
+	 * Set player location info
+	 */
 	public void setLocation(LocationInfo location) {
 		locationData.setLocation(datafile, location);
 	}
 
+	/**
+	 * Get player food level
+	 */
 	public int getFoodLevel() {
 		return statusData.getFoodLevel(datafile);
 	}
 
+	/**
+	 * Set player food level
+	 */
 	public void setFoodLevel(int foodlevel) {
 		statusData.setFoodLevel(datafile, foodlevel);
 	}
 
+	/**
+	 * Get player health
+	 */
 	public float getHealth() {
 		return statusData.getHealth(datafile);
 	}
 
+	/**
+	 * Set player health
+	 */
 	public void setHealth(float health) {
 		statusData.setHealth(datafile, health);
 	}
 
+	/**
+	 * Get player max health
+	 * @return player max health or 20 if player didn't have maxhealth set
+	 */
 	public float getMaxHealth() {
 		return statusData.getMaxHealth(datafile);
 	}
 
+	/**
+	 * Set player max health
+	 */
 	public void setMaxHealth(float maxhealth) {
 		statusData.setMaxHeath(datafile, maxhealth);
 	}
 
+	/**
+	 * Get player game mode
+	 * @return player game mode or null if internal game mode state couldn't be decoded into the GameMode enum
+	 */
 	public GameMode getGameMode() {
 		return statusData.getGameMode(datafile);
 	}
 
+	/**
+	 * Set player game mode
+	 */
 	public void setGameMode(GameMode gamemode) {
 		statusData.setGameMode(datafile, gamemode);
 	}
 
+	/**
+	 * Get player xp percent
+	 */
 	public float getExp() {
 		return expData.getExp(datafile);
 	}
 
+	/**
+	 * Set player xp percent
+	 */
 	public void setExp(float exp) {
 		expData.setExp(datafile, exp);
 	}
 
+	/**
+	 * Get player level
+	 */
 	public int getLevel() {
 		return expData.getLevel(datafile);
 	}
 
+	/**
+	 * Set player level
+	 * @param level
+	 */
 	public void setLevel(int level) {
 		expData.setLevel(datafile, level);
 	}
 
+	/**
+	 * Get player raw nbt data
+	 */
 	public HashMap<String, Object> getRawNBTData() {
 		return DataUtils.getData(datafile).toJava();
 	}
 
+	/**
+	 * Set player raw nbt data
+	 */
 	public void setRawNBTData(HashMap<String, Object> rawdata) {
 		DataUtils.saveData(datafile, NBTSerializer.fromJava(rawdata));
 	}

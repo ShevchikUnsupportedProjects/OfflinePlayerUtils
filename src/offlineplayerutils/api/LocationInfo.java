@@ -48,10 +48,19 @@ public class LocationInfo {
 		this.z = location.getZ();
 	}
 
+	/**
+	 * Get location world uuid
+	 * @return world uid
+	 */
 	public UUID getWorldUUID() {
 		return worlduuid;
 	}
 
+	/**
+	 * Get location world name.
+	 * Will attempt to resolve world name from uuid by walking world folders so result may be incorrect
+	 * @return name of the world or null if not resolved 
+	 */
 	private String worldname;
 	public String getWorldName() {
 		if (worldname == null) {
@@ -60,18 +69,34 @@ public class LocationInfo {
 		return worldname;
 	}
 
+	/**
+	 * Get location x coord
+	 * @return z coord
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 * Get location y coord
+	 * @return y coord
+	 */
 	public double getY() {
 		return y;
 	}
 
+	/**
+	 * Get location z coord
+	 * @return z coord
+	 */
 	public double getZ() {
 		return z;
 	}
 
+	/**
+	 * Get location object if possible
+	 * @return Location object or null if location world is not loaded
+	 */
 	public Location getLocation() {
 		if (Bukkit.getWorld(worlduuid) != null) {
 			return new Location(Bukkit.getWorld(worlduuid), x, y, z);

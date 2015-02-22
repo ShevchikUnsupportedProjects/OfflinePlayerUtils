@@ -25,10 +25,23 @@ import org.bukkit.OfflinePlayer;
 
 public class OfflinePlayerUtilsAPI {
 
+	/**
+	 * Get ExtendedOfflinePlayer instance
+	 * @param offlineplayer OfflinePlayer instance
+	 * @return ExtendedOfflinePlayer instance
+	 * @throws FileNotFoundException if player data file wasn't found
+	 */
 	public static ExtendedOfflinePlayer getExtendedOfflinePlayer(OfflinePlayer offlineplayer) throws FileNotFoundException {
 		return getExtendedOfflinePlayer(offlineplayer, new File(new File(Bukkit.getWorlds().get(0).getWorldFolder(), "playerdata"), offlineplayer.getUniqueId()+".dat"));
 	}
 
+	/**
+	 * Get ExtendedOfflinePlayer instance
+	 * @param offlineplayer OfflinePlayer instance
+	 * @param player data file
+	 * @return ExtendedOfflinePlayer instance 
+	 * @throws FileNotFoundException if player data file wasn't found
+	 */
 	public static ExtendedOfflinePlayer getExtendedOfflinePlayer(OfflinePlayer offlineplayer, File datafile) throws FileNotFoundException {
 		if (!datafile.exists()) {
 			throw new FileNotFoundException("Player data file "+datafile.getAbsolutePath()+" not found");

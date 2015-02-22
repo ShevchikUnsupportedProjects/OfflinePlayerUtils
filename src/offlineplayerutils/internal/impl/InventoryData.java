@@ -27,6 +27,7 @@ import offlineplayerutils.simplenbt.NBTTagCompound;
 import offlineplayerutils.simplenbt.NBTTagList;
 import offlineplayerutils.simplenbt.NBTTagType;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryData {
@@ -58,7 +59,11 @@ public class InventoryData {
 		NBTTagCompound data = DataUtils.getData(datafile);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
 		for (int i = 0; i < 36; i++) {
-			inventory.put(i, contents[i]);
+			if (contents[i] != null && contents[i].getType() == Material.AIR) {
+				inventory.put(i, null);
+			} else {
+				inventory.put(i, contents[i]);
+			}
 		}
 		setItems(data, inventory);
 		DataUtils.saveData(datafile, data);
@@ -71,7 +76,11 @@ public class InventoryData {
 		NBTTagCompound data = DataUtils.getData(datafile);
 		HashMap<Integer, ItemStack> inventory = getItems(data);
 		for (int i = 0; i < 4; i++) {
-			inventory.put(100 + i, contents[i]);
+			if (contents[i] != null && contents[i].getType() == Material.AIR) {
+				inventory.put(i, null);
+			} else {
+				inventory.put(i, contents[i]);
+			}
 		}
 		setItems(data, inventory);
 		DataUtils.saveData(datafile, data);

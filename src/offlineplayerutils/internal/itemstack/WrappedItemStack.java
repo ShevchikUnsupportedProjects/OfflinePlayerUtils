@@ -87,7 +87,11 @@ public class WrappedItemStack extends IWrappedItemStack {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void setType(final Material type) {
+		if (type == getType()) {
+			return;
+		}
 		tag.setShort("id", (short) type.getId());
+		setItemMeta(getItemMeta());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -109,6 +113,9 @@ public class WrappedItemStack extends IWrappedItemStack {
 
 	@Override
 	public void setAmount(int amount) {
+		if (getAmount() == amount) {
+			return;
+		}
 		tag.setByte("Count", (byte) amount);
 	}
 
@@ -119,6 +126,9 @@ public class WrappedItemStack extends IWrappedItemStack {
 
 	@Override
 	public void setDurability(short durability) {
+		if (getDurability() == durability) {
+			return;
+		}
 		tag.setShort("Damage", durability);
 	}
 

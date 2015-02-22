@@ -19,14 +19,35 @@ package offlineplayerutils.api.inventory;
 
 import java.util.Map;
 
+import offlineplayerutils.internal.itemstack.WrappedItemStack;
+import offlineplayerutils.simplenbt.NBTTagCompound;
+
 import org.bukkit.inventory.ItemStack;
 
 public abstract class IWrappedItemStack extends ItemStack {
 
+	/**
+	 * Create wrapped itemstack from raw nbt data
+	 */
+	public static IWrappedItemStack createFromRawNBTData(Map<String, Object> rawdata) {
+		WrappedItemStack wrappedstack = new WrappedItemStack(new NBTTagCompound());
+		wrappedstack.setRawNBTData(rawdata);
+		return wrappedstack;
+	}
+
+	/**
+	 * Get direct ItemMeta, any changes apply to itemstack instantly
+	 */
 	public abstract IWrappedItemMeta getDirectMeta();
 
+	/**
+	 * Get itemstack raw nbt data
+	 */
 	public abstract Map<String, Object> getRawNBTData();
 
+	/**
+	 * Set itemstack raw nbt data
+	 */
 	public abstract void setRawNBTData(Map<String, Object> rawdata);
 
 }

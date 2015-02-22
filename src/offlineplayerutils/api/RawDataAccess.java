@@ -26,10 +26,20 @@ import offlineplayerutils.simplenbt.NBTSerializer;
 
 public class RawDataAccess {
 
+	/**
+	 * Read raw nbt data from input stream
+	 * @param input steam
+	 * @return raw data
+	 */
 	public static Map<String, Object> getRawNBTDataFrom(InputStream inputsteam) {
 		return NBTSerializer.read(inputsteam).toJava();
 	}
 
+	/**
+	 * Write raw nbt data to output steam
+	 * @param raw data
+	 * @param output stream
+	 */
 	public static void writeRawNBTDataTo(HashMap<String, Object> rawdata, OutputStream stream) {
 		NBTSerializer.write(NBTSerializer.fromJava(rawdata), stream);
 	}
