@@ -70,6 +70,13 @@ public class ExtendedOfflinePlayer {
 	}
 
 	/**
+	 * Get player ender chest contents
+	 */
+	public IWrappedItemStack[] getEnderChestContents() {
+		return inventoryData.getEnderChestContents(datafile);
+	}
+
+	/**
 	 * Set player inventory contents
 	 * @param contents array of itemstacks, should have a length of 36
 	 */
@@ -83,6 +90,14 @@ public class ExtendedOfflinePlayer {
 	 */
 	public void setArmorContents(ItemStack[] contents) {
 		inventoryData.setArmorContents(datafile, contents);
+	}
+
+	/**
+	 * Set player ender chest contents
+	 * @param contents array of itemstacks, should have a length of 27
+	 */
+	public void setEnderChestContents(ItemStack[] contents) {
+		inventoryData.setEnderChestContents(datafile, contents);
 	}
 
 	/**

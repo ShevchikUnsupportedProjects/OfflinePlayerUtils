@@ -19,6 +19,7 @@ package offlineplayerutils.internal.itemstack;
 
 import offlineplayerutils.api.inventory.IWrappedItemStack;
 import offlineplayerutils.internal.itemstack.meta.MetaSerializer;
+import offlineplayerutils.simplenbt.NBTSerializer;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +32,22 @@ public class ItemStackSerializer {
 
 	public static NBTTagCompound saveToNBT(ItemStack itemstack) {
 		if (itemstack instanceof WrappedItemStack) {
-			return ((WrappedItemStack) itemstack).getTag();
+			WrappedItemStack wrappedstack = (WrappedItemStack) itemstack;
+			NBTTagCompound itemmetatag = (NBTTagCompound) wrappedstack.getRootTag().get("tag");
+			if (itemmetatag != null && itemmetatag.size() == 0) {
+				wrappedstack.getRootTag().remove("tag");
+			}
+			return wrappedstack.getRootTag();
+		} else if (itemstack instanceof IWrappedItemStack) {
+			IWrappedItemStack iwrappedstack = (IWrappedItemStack) itemstack;
+			NBTTagCompound stacktag = fromBukkit(itemstack);
+			NBTTagCompound itemmetatag = NBTSerializer.fromJava(iwrappedstack.getRawNBTData());
+			if (itemmetatag.size() == 0) {
+				stacktag.remove("tag");
+			} else {
+				stacktag.set("tag", itemmetatag);
+			}
+			return stacktag;
 		} else {
 			return fromBukkit(itemstack);
 		}
@@ -44,9 +60,9 @@ public class ItemStackSerializer {
 		wrappedstack.setAmount(itemstack.getAmount());
 		wrappedstack.setDurability(itemstack.getDurability());
 		if (itemstack.hasItemMeta()) {
-			wrappedstack.getTag().set("tag", MetaSerializer.createTagFromMeta(wrappedstack.getType(), itemstack.getItemMeta()));
+			wrappedstack.getRootTag().set("tag", MetaSerializer.createTagFromMeta(wrappedstack.getType(), itemstack.getItemMeta()));
 		}
-		return wrappedstack.getTag();
+		return wrappedstack.getRootTag();
 	}
 
 }

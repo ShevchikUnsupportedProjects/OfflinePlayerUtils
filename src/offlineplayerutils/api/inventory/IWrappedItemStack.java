@@ -36,7 +36,7 @@ public abstract class IWrappedItemStack extends ItemStack {
 	}
 
 	/**
-	 * Get direct ItemMeta, any changes apply to itemstack instantly
+	 * Get direct ItemMeta, any changes on it reflect on itemstack
 	 */
 	public abstract IWrappedItemMeta getDirectMeta();
 

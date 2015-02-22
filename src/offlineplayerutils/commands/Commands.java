@@ -57,6 +57,11 @@ public class Commands implements CommandExecutor {
 								executor.sendMessage(ChatColor.GOLD+"Applied "+player.getName()+" armor to you");
 								return true;
 							}
+							case "enderchest": {
+								executor.getEnderChest().setContents(eplayer.getEnderChestContents());
+								executor.sendMessage(ChatColor.GOLD+"Applied "+player.getName()+" ender chest to your");
+								return true;
+							}
 							case "location": {
 								LocationInfo linfo = eplayer.getLocation();
 								if (linfo.getLocation() != null) {
@@ -106,6 +111,11 @@ public class Commands implements CommandExecutor {
 							case "armor": {
 								eplayer.setArmorContents(executor.getInventory().getArmorContents());
 								executor.sendMessage(ChatColor.GOLD+"Applied your armor to "+player.getName());
+								return true;
+							}
+							case "enderchest": {
+								eplayer.setEnderChestContents(executor.getEnderChest().getContents());
+								executor.sendMessage(ChatColor.GOLD+"Applied your ender chest to "+player.getName());
 								return true;
 							}
 							case "location": {

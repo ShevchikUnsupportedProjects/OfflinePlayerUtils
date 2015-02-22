@@ -46,7 +46,7 @@ public class WrappedItemStack extends IWrappedItemStack {
 		}
 	}
 
-	protected NBTTagCompound getTag() {
+	protected NBTTagCompound getRootTag() {
 		return tag;
 	}
 

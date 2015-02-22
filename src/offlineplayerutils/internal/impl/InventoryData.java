@@ -32,24 +32,19 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryData {
 
+	private static final String PLAYER_INVENTORY_TAG = "Inventory";
+	private static final String ENDER_ITEMS_TAG = "EnderItems";
+
 	public IWrappedItemStack[] getInventoryContents(File datafile) {
-		NBTTagCompound data = DataUtils.getData(datafile);
-		HashMap<Integer, ItemStack> inventory = getItems(data);
-		IWrappedItemStack[] items = new IWrappedItemStack[36];
-		for (int i = 0; i < 36; i++) {
-			items[i] = (IWrappedItemStack) inventory.get(i);
-		}
-		return items;
+		return getSpecificItems(getItems(DataUtils.getData(datafile), PLAYER_INVENTORY_TAG), 0, 36);
 	}
 
 	public IWrappedItemStack[] getArmorContents(File datafile) {
-		NBTTagCompound data = DataUtils.getData(datafile);
-		HashMap<Integer, ItemStack> inventory = getItems(data);
-		IWrappedItemStack[] armor = new IWrappedItemStack[4];
-		for (int i = 0; i < 4; i++) {
-			armor[i] = (IWrappedItemStack) inventory.get(100 + i);
-		}
-		return armor;
+		return getSpecificItems(getItems(DataUtils.getData(datafile), PLAYER_INVENTORY_TAG), 100, 104);
+	}
+
+	public IWrappedItemStack[] getEnderChestContents(File datafile) {
+		return getSpecificItems(getItems(DataUtils.getData(datafile), ENDER_ITEMS_TAG), 0, 27);
 	}
 
 	public void setInventoryContents(File datafile, ItemStack[] contents) {
@@ -57,16 +52,7 @@ public class InventoryData {
 			throw new IllegalArgumentException("Inventory contents array should have a length of 36");
 		}
 		NBTTagCompound data = DataUtils.getData(datafile);
-		HashMap<Integer, ItemStack> inventory = getItems(data);
-		for (int i = 0; i < 36; i++) {
-			if (contents[i] != null && contents[i].getType() == Material.AIR) {
-				inventory.put(i, null);
-			} else {
-				inventory.put(i, contents[i]);
-			}
-		}
-		setItems(data, inventory);
-		DataUtils.saveData(datafile, data);
+		DataUtils.saveData(datafile, setItems(data, PLAYER_INVENTORY_TAG, setSpecificItems(getItems(data, PLAYER_INVENTORY_TAG), 0, 36, contents)));
 	}
 
 	public void setArmorContents(File datafile, ItemStack[] contents) {
@@ -74,24 +60,42 @@ public class InventoryData {
 			throw new IllegalArgumentException("Armor contents array should have a length of 4");
 		}
 		NBTTagCompound data = DataUtils.getData(datafile);
-		HashMap<Integer, ItemStack> inventory = getItems(data);
-		for (int i = 0; i < 4; i++) {
-			if (contents[i] != null && contents[i].getType() == Material.AIR) {
-				inventory.put(i, null);
-			} else {
-				inventory.put(i, contents[i]);
-			}
+		DataUtils.saveData(datafile, setItems(data, PLAYER_INVENTORY_TAG, setSpecificItems(getItems(data, PLAYER_INVENTORY_TAG), 100, 104, contents)));
+	}
+
+	public void setEnderChestContents(File datafile, ItemStack[] contents) {
+		if (contents.length != 27) {
+			throw new IllegalArgumentException("Armor contents array should have a length of 4");
 		}
-		setItems(data, inventory);
-		DataUtils.saveData(datafile, data);
+		NBTTagCompound data = DataUtils.getData(datafile);
+		DataUtils.saveData(datafile, setItems(data, ENDER_ITEMS_TAG, setSpecificItems(getItems(data, ENDER_ITEMS_TAG), 0, 27, contents)));
 	}
 
 
+	private IWrappedItemStack[] getSpecificItems(HashMap<Integer, ItemStack> items, int startslot, int endslot) {
+		IWrappedItemStack[] stacks = new IWrappedItemStack[endslot - startslot];
+		for (int invslot = startslot; invslot < endslot; invslot++) {
+			stacks[invslot - startslot] = (IWrappedItemStack) items.get(invslot);
+		}
+		return stacks;
+	}
+
+	private HashMap<Integer, ItemStack> setSpecificItems(HashMap<Integer, ItemStack> items, int startslot, int endslot, ItemStack[] setitems) {
+		for (int invslot = startslot, setitem = 0; invslot < endslot; invslot++, setitem++) {
+			if (setitems[setitem] != null && setitems[setitem].getType() == Material.AIR) {
+				items.put(invslot, null);
+			} else {
+				items.put(invslot, setitems[setitem]);
+			}
+		}
+		return items;
+	}
+
 	@SuppressWarnings("unchecked")
-	private HashMap<Integer, ItemStack> getItems(NBTTagCompound data) {
+	private HashMap<Integer, ItemStack> getItems(NBTTagCompound data, String invtagname) {
 		HashMap<Integer, ItemStack> items = new HashMap<Integer, ItemStack>();
 		if (data.hasListOfType("Inventory", NBTTagType.COMPOUND)) {
-			NBTTagList<NBTTagCompound> nbttaglist = (NBTTagList<NBTTagCompound>) data.get("Inventory");
+			NBTTagList<NBTTagCompound> nbttaglist = (NBTTagList<NBTTagCompound>) data.get(invtagname);
 	        for (NBTTagCompound slotinfo : nbttaglist) {
 	            int slot = slotinfo.getByte("Slot") & 255;
 	            ItemStack itemstack = ItemStackSerializer.createItemStack(slotinfo);
@@ -103,7 +107,7 @@ public class InventoryData {
 		return items;
 	}
 
-	private NBTTagCompound setItems(NBTTagCompound data, HashMap<Integer, ItemStack> items) {
+	private NBTTagCompound setItems(NBTTagCompound data, String invtagname, HashMap<Integer, ItemStack> items) {
 		NBTTagList<NBTTagCompound> nbttaglist = new NBTTagList<NBTTagCompound>();
 		for (Entry<Integer, ItemStack> entry : items.entrySet()) {
 			if (entry.getValue() != null) {
@@ -114,7 +118,7 @@ public class InventoryData {
 	        	}
 			}
 		}
-		data.set("Inventory", nbttaglist);
+		data.set(invtagname, nbttaglist);
 		return data;
 	}
 
