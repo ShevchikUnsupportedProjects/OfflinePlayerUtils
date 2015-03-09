@@ -64,7 +64,7 @@ public class NBTSerializer {
 	@SuppressWarnings("unchecked")
 	private static NBTTagBase<?> decodeObject(Object obj) {
 		if (obj instanceof Number) {
-			return new NBTTagNumber<Number>((NBTTagType) obj);
+			return new NBTTagNumber<Number>((Number) obj);
 		}
 		if (obj instanceof String) {
 			return new NBTTagString((String) obj);

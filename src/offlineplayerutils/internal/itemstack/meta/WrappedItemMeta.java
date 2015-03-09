@@ -197,7 +197,7 @@ public class WrappedItemMeta implements IWrappedItemMeta, Repairable {
 	@Override
 	public boolean removeEnchant(Enchantment ench) {
 		Map<Enchantment, Integer> enchants = getEnchants();
-		boolean had = enchants.remove(enchants) != null;
+		boolean had = enchants.remove(ench) != null;
 		saveEnchants(enchants);
 		return had;
 	}

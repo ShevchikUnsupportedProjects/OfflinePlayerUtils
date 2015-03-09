@@ -48,27 +48,30 @@ public class WrappedBookMeta extends WrappedItemMeta implements BookMeta {
 
 	@Override
 	public boolean hasTitle() {
-		// TODO Auto-generated method stub
-		return false;
+		return itemmetatag.hasOfType(TILTE_TAG, NBTTagType.STRING);
 	}
 
 	@Override
 	public String getTitle() {
 		if (hasTitle()) {
+			return itemmetatag.getString(TILTE_TAG);
 		}
 		return null;
 	}
 
 	@Override
 	public boolean setTitle(String title) {
-		// TODO Auto-generated method stub
-		return false;
+		if (title == null || title.isEmpty()) {
+			itemmetatag.remove(AUTHOR_TAG);
+		} else {
+			itemmetatag.setString(AUTHOR_TAG, title);
+		}
+		return true;
 	}
 
 	@Override
 	public boolean hasPages() {
-		// TODO Auto-generated method stub
-		return false;
+		return itemmetatag.hasListOfType(PAGES_TAG, NBTTagType.STRING);
 	}
 
 	@Override
