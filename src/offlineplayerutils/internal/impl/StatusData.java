@@ -22,7 +22,6 @@ import java.io.File;
 import offlineplayerutils.simplenbt.NBTTagCompound;
 
 import org.bukkit.GameMode;
-import org.bukkit.OfflinePlayer;
 
 public class StatusData {
 

@@ -116,27 +116,27 @@ public class NBTTagNumber<T extends Number> extends NBTTagBase<T> {
 	public NBTTagNumber<T> readValue(DataInputStream stream) throws IOException {
 		switch (getType()) {
 			case BYTE: {
-				number = (T) new Byte(stream.readByte());
+				number = (T) Byte.valueOf(stream.readByte());
 				break;
 			}
 			case SHORT: {
-				number = (T) new Short(stream.readShort());
+				number = (T) Short.valueOf(stream.readShort());
 				break;
 			}
 			case INT: {
-				number = (T) new Integer(stream.readInt());
+				number = (T) Integer.valueOf(stream.readInt());
 				break;
 			}
 			case LONG: {
-				number = (T) new Long(stream.readLong());
+				number = (T) Long.valueOf(stream.readLong());
 				break;
 			}
 			case FLOAT: {
-				number = (T) new Float(stream.readFloat());
+				number = (T) Float.valueOf(stream.readFloat());
 				break;
 			}
 			case DOUBLE: {
-				number = (T) new Double(stream.readDouble());
+				number = (T) Double.valueOf(stream.readDouble());
 				break;
 			}
 			default: {

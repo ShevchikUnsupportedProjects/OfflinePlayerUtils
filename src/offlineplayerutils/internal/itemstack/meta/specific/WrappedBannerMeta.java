@@ -134,7 +134,7 @@ public class WrappedBannerMeta extends WrappedItemMeta implements BannerMeta {
 	@SuppressWarnings("deprecation")
 	private void savePatterns(List<Pattern> patterns) {
 		NBTTagCompound blockentitytag = getBlockEntityTag();
-		if (patterns.size() == 0) {
+		if (patterns.isEmpty()) {
 			blockentitytag.remove(PATTERNS_TAG);
 		} else {
 			NBTTagList<NBTTagCompound> patternstag = new NBTTagList<NBTTagCompound>();
