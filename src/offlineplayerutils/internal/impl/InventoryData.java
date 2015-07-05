@@ -65,7 +65,7 @@ public class InventoryData {
 
 	public void setEnderChestContents(File datafile, ItemStack[] contents) {
 		if (contents.length != 27) {
-			throw new IllegalArgumentException("Armor contents array should have a length of 4");
+			throw new IllegalArgumentException("Ender chest contents array should have a length of 27");
 		}
 		NBTTagCompound data = DataUtils.getData(datafile);
 		DataUtils.saveData(datafile, setItems(data, ENDER_ITEMS_TAG, setSpecificItems(getItems(data, ENDER_ITEMS_TAG), 0, 27, contents)));
